@@ -1,0 +1,28 @@
+[
+    {
+      "name": "Anna",
+      "lat": 48.6468006,
+      "lng": 9.0288991,
+      "farbe": "red"
+    },
+    {
+      "name": "Lara",
+      "lat": 48.6258006,
+      "lng": 9.0078991,
+      "farbe": "grey"
+    },
+    {
+      "name": "Nina",
+      "lat": 48.6238006,
+      "lng": 9.0279991,
+      "farbe": "blue"
+    },
+    {
+      "name": "Tim",
+      "lat": 48.6458006,
+      "lng": 9.0068991,
+      "farbe": "yellow"
+    }
+        ]
+
+
