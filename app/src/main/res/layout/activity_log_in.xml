@@ -7,8 +7,8 @@
     android:id="@+id/backgroundimg">
     <ImageView
         android:id="@+id/app_logo"
-        android:layout_width="350px"
-        android:layout_height="350px"
+        android:layout_width="250px"
+        android:layout_height="250px"
         android:src="@drawable/img3"
         android:layout_gravity="center"/>
 
@@ -42,13 +42,6 @@
         android:layout_height="wrap_content"
         android:textColor="#FFFFFF"
         android:singleLine="false" />
-
-    <Button
-        android:id="@+id/bLogin"
-        android:text="Login"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#FA483C" />
     <TextView
         android:id="@+id/tvRegisterLink"
         android:layout_width="wrap_content"
@@ -56,11 +49,27 @@
         android:textStyle="bold"
         android:layout_gravity="left"
         android:text="REGISTER HERE"
-        android:textSize="45px"
+        android:textSize="35px"
         android:layout_marginTop="20dp"
-        android:textIsSelectable="true"
+        android:textIsSelectable="false"
         android:textColor="#85E13A"
-        android:singleLine="true" />
+        android:singleLine="false"
+        android:fontFamily="Arial"
+        android:focusableInTouchMode="true"
+        android:gravity="center_horizontal" />
+
+    <Button
+        android:id="@+id/bLogin"
+        android:text="Login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FA483C"
+        android:textColor="#FFFFFF"
+        android:layout_marginTop="90dp"
+        android:textSize="30px" />
+
+
+
 
 
 </LinearLayout>
