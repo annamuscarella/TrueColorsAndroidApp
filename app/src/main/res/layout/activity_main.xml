@@ -14,11 +14,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="10dp"
+        android:textSize="30px" />
     <ImageView
         android:id="@+id/app_logo"
-        android:layout_width="350px"
-        android:layout_height="350px"
+        android:layout_width="250px"
+        android:layout_height="250px"
         android:src="@drawable/img3"
         android:layout_gravity="center"/>
     <TextView
@@ -27,7 +28,8 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="30dp"
         android:id="@+id/data"
-        android:textColor="#85E13A" />
+        android:textColor="#85E13A"
+        android:textSize="30px" />
     <TextView
         android:layout_width="wrap_content"
         android:text="NAME"
@@ -62,7 +64,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="#FFFFFF"
-        android:background="#FA483C" />
+        android:background="#FA483C"
+        android:textSize="30px" />
     />
 
     <Button
@@ -72,7 +75,8 @@
         android:background="#149185"
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textSize="30px" />
 
 
 </LinearLayout>
