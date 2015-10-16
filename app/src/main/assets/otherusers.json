@@ -1,28 +1,14 @@
-[
+{
+  "userPosition":
+  [
+
     {
-      "name": "Anna",
-      "lat": 48.7668006,
-      "lng": 9.1688991,
-      "farbe": "red"
-    },
-    {
-      "name": "Lara",
-      "lat": 48.7658006,
-      "lng": 9.1878991,
-      "farbe": "grey"
-    },
-    {
-      "name": "Nina",
-      "lat": 48.7838006,
-      "lng": 9.1679991,
-      "farbe": "blue"
-    },
-    {
-      "name": "Tim",
-      "lat": 48.6458006,
-      "lng": 9.1868991,
-      "farbe": "yellow"
+      "color": "grey",
+      "lat": 48.7732953,
+      "lon": 9.1705752,
+      "name": "hans"
     }
-        ]
+  ]
+}
 
 

@@ -28,6 +28,8 @@ public class MapsActivity extends FragmentActivity implements LocationProvider.L
 
     public static final String TAG = MapsActivity.class.getSimpleName();
 
+    public boolean connectionToServer = true; //HIER ANGEBEN, ob Server connected ist oder nicht!!
+
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
     private LocationProvider mLocationProvider; //class is used to get user's current location
 
@@ -161,28 +163,36 @@ public class MapsActivity extends FragmentActivity implements LocationProvider.L
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(ownlocation, 14.5f));
         //add new marker at current user position
 
-        /*InputStream stream = null;
-        try {
-            stream = getAssets().open("otherusers.json"); //open JSON document (later: HTTP response, not asset)
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
-
         context = this;
+        if (connectionToServer) //send http request only if connected to server
+        {
         new HttpRequestSender(context, username, ownlocation.latitude, ownlocation.longitude).execute("anna");
-      /*  Thread http = new Thread(new Runnable(){
-            @Override
-            public void run() {
-                new HttpRequestSender(context, username, ownlocation.latitude, ownlocation.longitude).execute("anna");
-            }
+        }
 
-        });
-        http.run();*/
+        else { //if not connected, use local JSON dokument (assets/otherusers.json)
+            InputStream stream = null;
+            try {
+                stream = getAssets().open("otherusers.json"); //open JSON document (later: HTTP response, not asset)
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            if (stream != null) {
+                UserImportierer mUserImportierer = new UserImportierer(); //create new JSON Parser Object
+                try {
+                    userArray = mUserImportierer.readJsonStream(stream);}
+                catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+            else {return;}
+
 
         //displayOtherUser(newRequest.getOtherUsers(username, location.getLatitude(), location.getLatitude()));
 
 }
+    }
 
 
     private boolean checkIfOwnLocationAlreadyDisplayed() {
