@@ -1,0 +1,75 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    android:layout_width="match_parent"
+    android:background="@drawable/img2"
+    android:id="@+id/backgroundimg">
+    <ImageView
+        android:id="@+id/app_logo"
+        android:layout_width="250px"
+        android:layout_height="250px"
+        android:src="@drawable/img3"
+        android:layout_gravity="center"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:text="USERNAME"
+        android:layout_height="wrap_content"
+        android:textColor="#FFFFFF"
+        android:layout_marginTop="10dp"
+        />
+    <EditText
+        android:id="@+id/etUsername"
+        android:layout_width="match_parent"
+        android:layout_marginBottom="10dp"
+        android:layout_height="wrap_content"
+        android:singleLine="false"
+        android:textColor="#FFFFFF"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:text="PASSWORD"
+
+        android:layout_height="wrap_content"
+        android:fontFamily="HP Simplified"
+        android:textColor="#FFFFFF" />
+    <EditText
+        android:id="@+id/etPassword"
+        android:layout_width="match_parent"
+        android:layout_marginBottom="10dp"
+        android:inputType="textPassword"
+        android:layout_height="wrap_content"
+        android:textColor="#FFFFFF"
+        android:singleLine="false" />
+    <TextView
+        android:id="@+id/tvRegisterLink"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:layout_gravity="left"
+        android:text="REGISTER HERE"
+        android:textSize="35px"
+        android:layout_marginTop="20dp"
+        android:textIsSelectable="false"
+        android:textColor="#85E13A"
+        android:singleLine="false"
+        android:fontFamily="Arial"
+        android:focusableInTouchMode="true"
+        android:gravity="center_horizontal" />
+
+    <Button
+        android:id="@+id/bLogin"
+        android:text="Login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FA483C"
+        android:textColor="#FFFFFF"
+        android:layout_marginTop="90dp"
+        android:textSize="30px" />
+
+
+
+
+
+</LinearLayout>

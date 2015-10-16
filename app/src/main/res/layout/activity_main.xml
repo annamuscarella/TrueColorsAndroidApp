@@ -1,0 +1,82 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    android:layout_width="match_parent"
+    android:background="@drawable/img2"
+    android:id="@+id/backgroundimg">
+
+    <TextView
+        android:text="WILKOMMEN!"
+        android:textColor="#FFFFFF"
+        android:gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:textSize="30px" />
+    <ImageView
+        android:id="@+id/app_logo"
+        android:layout_width="250px"
+        android:layout_height="250px"
+        android:src="@drawable/img3"
+        android:layout_gravity="center"/>
+    <TextView
+        android:text="DEINE DATEN"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:id="@+id/data"
+        android:textColor="#85E13A"
+        android:textSize="30px" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:text="NAME"
+        android:textColor="#FFFFFF"
+        android:layout_height="wrap_content" />
+    <EditText
+        android:id="@+id/etName"
+        android:layout_width="match_parent"
+        android:layout_marginBottom="10dp"
+        android:layout_height="wrap_content"
+        android:textColor="#FFFFFF"
+         />
+    <TextView
+        android:layout_width="wrap_content"
+        android:text="USERNAME"
+        android:textColor="#FFFFFF"
+        android:layout_height="wrap_content" />
+    <EditText
+        android:id="@+id/etUsername"
+        android:layout_width="match_parent"
+        android:layout_marginBottom="10dp"
+        android:layout_height="wrap_content"
+        android:singleLine="false"
+        android:textColor="#FFFFFF" />
+
+
+
+    <Button
+        android:id="@+id/bBegin"
+        android:text="START GAME"
+        android:layout_marginTop="40dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#FFFFFF"
+        android:background="#FA483C"
+        android:textSize="30px" />
+    />
+
+    <Button
+        android:id="@+id/bLogout"
+        android:text="Logout"
+        android:textColor="#FFFFFF"
+        android:background="#149185"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="30px" />
+
+
+</LinearLayout>
