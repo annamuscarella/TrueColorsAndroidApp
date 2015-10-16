@@ -1,5 +1,6 @@
 package com.example.pinkprincess.meetmetest2;
 
+import android.content.Context;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -23,7 +24,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 
-public class MapsActivity extends FragmentActivity implements LocationProvider.LocationCallback, OnMarkerClickListener, OnMapReadyCallback {
+public class MapsActivity extends FragmentActivity implements LocationProvider.LocationCallback, OnMarkerClickListener, OnMapReadyCallback, HttpRequestInterface {
 
     public static final String TAG = MapsActivity.class.getSimpleName();
 
@@ -32,7 +33,11 @@ public class MapsActivity extends FragmentActivity implements LocationProvider.L
 
     private LatLng ownlocation; //variable for storing own current Location
 
-    private ArrayList<Marker> markers = new ArrayList<Marker>();
+    private String username = "hans";
+
+    private Context context;
+
+    private ArrayList<Marker> markers = new ArrayList();
 
     private ArrayList<OtherUser> userArray; //ArrayList for storing recieved JSON objects --> other users near user that should be displayed on the map
 
@@ -90,6 +95,8 @@ public class MapsActivity extends FragmentActivity implements LocationProvider.L
 
 
         mLocationProvider = new LocationProvider(this, this);
+
+
     }
 
     @Override
@@ -103,7 +110,6 @@ public class MapsActivity extends FragmentActivity implements LocationProvider.L
         } catch (IOException e) {
             e.printStackTrace();
         }
-        displayOtherUser(stream);
     }
 
     @Override
@@ -145,24 +151,36 @@ public class MapsActivity extends FragmentActivity implements LocationProvider.L
         ownlocation = new LatLng(location.getLatitude(), location.getLongitude()); //save location as LatLng
 
         if (checkIfOwnLocationAlreadyDisplayed())
-            {findOwnLocationMarker().remove();} //if current user location is already displayed, remove marker
+            {return;} //findOwnLocationMarker().remove();} //if current user location is already displayed, remove marker
 
         MarkerOptions options = new MarkerOptions()
                 .position(ownlocation)
                 .title("I am here!");
         mMap.addMarker(options);
         mMap.moveCamera(CameraUpdateFactory.newLatLng(ownlocation));
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(ownlocation, 13.5f));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(ownlocation, 14.5f));
         //add new marker at current user position
 
-        InputStream stream = null;
+        /*InputStream stream = null;
         try {
             stream = getAssets().open("otherusers.json"); //open JSON document (later: HTTP response, not asset)
 
         } catch (IOException e) {
             e.printStackTrace();
-        }
-        displayOtherUser(stream);
+        }*/
+
+        context = this;
+        new HttpRequestSender(context, username, ownlocation.latitude, ownlocation.longitude).execute("anna");
+      /*  Thread http = new Thread(new Runnable(){
+            @Override
+            public void run() {
+                new HttpRequestSender(context, username, ownlocation.latitude, ownlocation.longitude).execute("anna");
+            }
+
+        });
+        http.run();*/
+
+        //displayOtherUser(newRequest.getOtherUsers(username, location.getLatitude(), location.getLatitude()));
 
 }
 
@@ -182,17 +200,9 @@ public class MapsActivity extends FragmentActivity implements LocationProvider.L
         return answer;
     }
 
-    public void displayOtherUser(InputStream mInputStream) {
-
-            UserImportierer mUserImportierer = new UserImportierer(); //create new JSON Parser Object
-        try {
-            userArray = mUserImportierer.readJsonStream(mInputStream); //store JSON Objects from JSON Array as OtherUser Objects in userArray
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        /*
-        read and store all the attributes of each OtherUser in local variables, create new marker for each user
-         */
+@Override
+    public void displayOtherUser(ArrayList<OtherUser> userArray) {
+    this.userArray = userArray;
         for(int i = 0; i<userArray.size(); i++) {
                 LatLng userLoc = userArray.get(i).loc;
                 String userName = userArray.get(i).name;
@@ -215,7 +225,7 @@ public class MapsActivity extends FragmentActivity implements LocationProvider.L
                 Log.d(TAG, "Marker " + marker + "wurde angeklickt");
 
                 if (checkIfPossibleMeeting(marker)){ //check if distance between users is less than 2km and other user's color is green
-                eingabefeld.setVisibility(View.VISIBLE);} //if users might have met, display field for entering the other user's code
+                    eingabefeld.setVisibility(View.VISIBLE);} //if users might have met, display field for entering the other user's code
                 else{marker.setTitle(""+marker.getPosition());} //if user meeting is not possible, show other user's position (only for testing)
 
                 return false; //default return statement
@@ -245,6 +255,7 @@ public class MapsActivity extends FragmentActivity implements LocationProvider.L
         float distance = myUserLocation.distanceTo(otherUserLocation);
 
         if (distance < MAX_DISTANCE) {
+            int i = userArray.size();
             for (int a=0; a < userArray.size(); a++){
                 if(userArray.get(a).name.equals(marker.getTitle())){
                     if(userArray.get(a).color.equals("grey")){answer = true;}

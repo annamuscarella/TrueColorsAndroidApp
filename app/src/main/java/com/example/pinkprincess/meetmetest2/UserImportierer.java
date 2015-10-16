@@ -1,5 +1,6 @@
 package com.example.pinkprincess.meetmetest2;
 
+import android.os.NetworkOnMainThreadException;
 import android.util.JsonReader;
 
 import com.google.android.gms.maps.model.LatLng;
@@ -18,26 +19,45 @@ public class UserImportierer {
     public ArrayList<String> names = new ArrayList();
     public ArrayList<String> colors = new ArrayList();
 
-public ArrayList<OtherUser> readJsonStream(InputStream in) throws IOException {
+
+public ArrayList<OtherUser> readJsonStream(InputStream in) throws IOException, NetworkOnMainThreadException {
     JsonReader reader = new JsonReader(new InputStreamReader(in, "UTF-8"));
     try {
-        return readMessagesArray(reader);}
+        return readJsonObject(reader);}
     finally {reader.close();}
 
 }
 
-    public ArrayList<OtherUser> readMessagesArray(JsonReader reader) throws IOException {
-        ArrayList<OtherUser> messages = new ArrayList();
-
-        reader.beginArray();
-        while (reader.hasNext()) {
-            messages.add(readMessage(reader));
+    public ArrayList<OtherUser> readJsonObject(JsonReader reader)throws IOException, NetworkOnMainThreadException {
+        ArrayList userArray = new ArrayList();
+        reader.beginObject();
+        while (reader.hasNext())
+        {
+            String test = reader.nextName();
+            if (test.equals("userPosition")){
+            userArray = readMessagesArray(reader);}
         }
-        reader.endArray();
-        return messages;
+        ArrayList<OtherUser> userArray2 = new ArrayList();
+
+        return userArray;
     }
 
-    public OtherUser readMessage(JsonReader reader) throws IOException {
+
+    public ArrayList<OtherUser> readMessagesArray(JsonReader reader) throws IOException, NetworkOnMainThreadException {
+        ArrayList<OtherUser> usersArray = new ArrayList();
+            reader.beginArray();
+       try {
+           while (reader.hasNext()) {
+               usersArray.add(readMessage(reader));
+           }
+       }
+        //    }}
+        //catch (IOException e) {System.out.println(e);}
+        catch (NetworkOnMainThreadException e) {e.printStackTrace();}
+        finally { reader.endArray(); return usersArray;}
+    }
+
+    public OtherUser readMessage(JsonReader reader) throws IOException, NetworkOnMainThreadException {
         String name = null;
         Double lat = null;
         Double lng = null;
@@ -50,9 +70,9 @@ public ArrayList<OtherUser> readJsonStream(InputStream in) throws IOException {
                 name = reader.nextString();
             } else if (test.equals("lat")) {
                 lat = reader.nextDouble();
-            } else if (test.equals("lng")) {
+            } else if (test.equals("lon")) {
                 lng = reader.nextDouble();
-            } else if (test.equals("farbe")) {
+            } else if (test.equals("color")) {
                 color = reader.nextString();
             } else {
                 reader.skipValue();

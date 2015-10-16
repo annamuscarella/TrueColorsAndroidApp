@@ -29,16 +29,6 @@
             android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_gravity="bottom" />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/imageView"
-            android:layout_gravity="center"
-            android:src="@drawable/blue"
-            android:foregroundGravity="top"
-            android:contentDescription="@drawable/radar"
-            android:visibility="gone" />
-
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="wrap_content"
