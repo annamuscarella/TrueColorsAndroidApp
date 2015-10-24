@@ -3,19 +3,6 @@
     android:layout_width="match_parent" android:layout_height="match_parent"
     android:orientation="vertical"
     android:weightSum="1">
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="TrueColors."
-        android:id="@+id/textView"
-        android:layout_weight="0.06"
-        android:background="#cb2adb3f"
-        android:autoText="false"
-        android:enabled="true"
-        android:textColor="#ffffff"
-        android:textStyle="bold"
-        android:textSize="@dimen/abc_action_button_min_width_material" />
 
     <FrameLayout
         android:layout_width="match_parent"

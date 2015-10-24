@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/img2"
+    android:id="@+id/backgroundimg"
+
+    android:weightSum="1">
+
+    <TextView
+        android:text="Dein Score"
+        android:textColor="#FFFFFF"
+        android:gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp"
+        android:layout_marginTop="10dp"
+        android:textSize="80px" />
+    <ImageView
+        android:id="@+id/pokal"
+        android:layout_width="match_parent"
+        android:layout_height="124dp"
+        android:src="@drawable/pokal"
+        android:layout_marginBottom="0dp"
+        android:gravity="center_horizontal"
+
+        android:layout_gravity="center_horizontal" />
+
+    <TextView
+        android:text="8888"
+
+        android:paddingTop="5pt"
+        android:textColor="#85E13A"
+        android:gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="0dp"
+        android:layout_marginTop="0dp"
+        android:textSize="70px" />
+    <TextView
+        android:text="Punkte"
+
+        android:textColor="#A0700F"
+        android:paddingTop="5pt"
+        android:gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="0dp"
+        android:textSize="70px" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Aktualisieren"
+        android:id="@+id/bAktualisieren"
+        android:background="#FE642E"
+        android:textColor="#FFFFFF"
+        android:layout_marginTop="120dp"
+        android:visibility="visible" />
+
+
+</LinearLayout>

@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+
+    android:gravity="left">
+    <TextView
+        android:text="Deine Statistik"
+        android:textColor="#A0700F"
+        android:gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:textSize="80px" />
+
+
+
+    <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:stretchColumns="1"
+        android:background="#149185">
+        <View
+            android:layout_height="5dip"
+            android:background="#85E13A" />
+
+        <TableRow>
+
+            <ImageView
+                android:id="@+id/profilpic"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/profilepic"
+                android:layout_gravity="center"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="40px"
+                android:layout_marginLeft="20px"
+                android:layout_column="0" />
+
+            <TextView
+                android:layout_column="1"
+                android:text="Username"
+                android:padding="20dip"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                android:textSize="40px" />
+            <TextView
+                android:text="Team"
+                android:gravity="right"
+                android:padding="20dip"
+                android:textColor="#FFFFFF"
+                android:textSize="40px"
+                android:textStyle="bold" />
+        </TableRow>
+
+
+        <View
+            android:layout_height="5dip"
+            android:background="#85E13A" />
+
+    </TableLayout>
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF">
+
+
+        <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:stretchColumns="1"
+            android:layout_marginTop="10dp"
+            android:background="#85E13A">
+
+        <TableRow>
+            <ImageView
+                android:id="@+id/friends"
+                android:layout_width="50dp"
+                android:background="#149185"
+                android:layout_height="50dp"
+                android:src="@drawable/friends1"
+                android:layout_gravity="center"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="40px"
+                android:layout_marginLeft="20px"
+                android:layout_column="0" />
+
+            <Button
+
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Freundschaften"
+                android:id="@+id/bFriends"
+                android:background="#149185"
+                android:textColor="#FFFFFF"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="10px" />
+
+            />
+
+
+        </TableRow>
+            <View
+                android:layout_height="5dip"
+                android:background="#FFFFFF" />
+            <TableRow android:layout_marginTop="10dp">
+                <ImageView
+                    android:id="@+id/YourTeam"
+                    android:layout_width="50dp"
+                    android:background="#149185"
+                    android:layout_height="50dp"
+                    android:src="@drawable/score"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginTop="40px"
+                    android:layout_marginLeft="20px"
+                    android:layout_column="0" />
+
+                <Button
+
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Punktestand"
+                    android:id="@+id/bScore"
+                    android:background="#149185"
+                    android:textColor="#FFFFFF"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginLeft="10px" />
+
+                />
+
+            </TableRow>
+            <View
+                android:layout_height="5dip"
+                android:background="#FFFFFF" />
+            <TableRow android:layout_marginTop="10dp">
+                <ImageView
+                    android:id="@+id/team"
+                    android:layout_width="50dp"
+                    android:background="#149185"
+                    android:layout_height="50dp"
+                    android:src="@drawable/team"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginTop="40px"
+                    android:layout_marginLeft="20px"
+                    android:layout_column="0" />
+
+                <Button
+
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Dein Team"
+                    android:id="@+id/b"
+                    android:background="#149185"
+                    android:textColor="#FFFFFF"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginLeft="10px" />
+
+                />
+
+            </TableRow>
+       </TableLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+    </LinearLayout>
+
+
+
+
+</LinearLayout>

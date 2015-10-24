@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+
+    android:weightSum="1">
+    <TextView
+        android:text="Top Ranking"
+        android:textColor="#A0700F"
+        android:gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:textSize="70px" />
+    <ImageView
+        android:id="@+id/winner_logo"
+        android:layout_width="47dp"
+        android:layout_height="47dp"
+        android:src="@drawable/gewinner"
+        android:layout_gravity="center"
+        android:layout_marginBottom="20dp"/>
+
+    <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:stretchColumns="1"
+        android:background="#85E13A"
+        android:layout_weight="0.54">
+
+        <TableRow>
+            <TextView
+                android:text="Platz"
+                android:padding="20dip"
+                android:textColor="#FFFFFF"
+                android:textSize="40px"
+                android:textIsSelectable="true"
+                android:textStyle="bold" />
+            <TextView
+                android:layout_column="1"
+                android:text="Score"
+                android:padding="20dip"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                android:textSize="40px" />
+            <TextView
+                android:text="Team"
+                android:gravity="right"
+                android:padding="20dip"
+                android:textColor="#FFFFFF"
+                android:textSize="40px"
+                android:textStyle="bold" />
+        </TableRow>
+        <View
+            android:layout_height="3dip"
+            android:background="#149185" />
+        <TableRow>
+            <TextView
+                android:text="1."
+                android:padding="20dip"
+                android:textColor="#FFFFFF" />
+            <TextView
+                android:layout_column="1"
+                android:text="XXX"
+                android:padding="20dip"
+                android:textColor="#FFFFFF" />
+            <TextView
+                android:text="Teamname1"
+                android:gravity="right"
+                android:padding="20dip"
+                android:textColor="#FFFFFF" />
+        </TableRow>
+        <View
+            android:layout_height="3dip"
+            android:background="#149185" />
+
+        <TableRow>
+            <TextView
+                android:text="2."
+                android:padding="20dip"
+                android:textColor="#FFFFFF" />
+            <TextView
+                android:layout_column="1"
+                android:text="XXX"
+                android:padding="20dip"
+                android:textColor="#FFFFFF" />
+
+            <TextView
+                android:text="Teamname2"
+                android:gravity="right"
+                android:padding="20dip"
+                android:textColor="#FFFFFF" />
+        </TableRow>
+        <View
+            android:layout_height="3dip"
+            android:background="#149185" />
+
+        <TableRow>
+            <TextView
+                android:text="3."
+                android:padding="20dip"
+                android:textColor="#FFFFFF" />
+            <TextView
+                android:layout_column="1"
+                android:text="XXX"
+                android:padding="20dip"
+                android:textColor="#FFFFFF" />
+            <TextView
+                android:text="Teamname3"
+                android:gravity="right"
+                android:padding="20dip"
+                android:textColor="#FFFFFF" />
+        </TableRow>
+
+
+    </TableLayout>
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF">
+
+        <Button
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Spieler Ranking"
+            android:id="@+id/bSpieler"
+            android:background="#149185"
+            android:textColor="#FFFFFF"
+            android:layout_marginTop="10dp"
+            />
+
+
+
+    </LinearLayout>
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF">
+
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Aktualisieren"
+            android:id="@+id/bAktualisieren"
+            android:background="#FE642E"
+            android:textColor="#FFFFFF"
+            android:layout_marginTop="10dp"
+            />
+
+
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

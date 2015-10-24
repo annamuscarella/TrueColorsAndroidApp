@@ -1,14 +1,18 @@
 package com.example.pinkprincess.meetmetest2;
 
 import android.content.Context;
+import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -99,6 +103,54 @@ public class MapsActivity extends FragmentActivity implements LocationProvider.L
         mLocationProvider = new LocationProvider(this, this);
 
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.action_call:
+                Intent dialer= new Intent(Intent.ACTION_DIAL);
+                startActivity(dialer);
+                return true;
+
+            case R.id.action_register:
+                startActivity(new Intent(MapsActivity.this, RegisterActivity.class));
+                return true;
+
+
+            case R.id.action_login:
+                startActivity(new Intent(MapsActivity.this, LoginActivity.class));
+                return true;
+
+            case R.id.action_settings:
+                Toast.makeText(getApplicationContext(), "Settings Clicked", Toast.LENGTH_SHORT).show();
+                return true;
+
+            case R.id.action_profile:
+                startActivity(new Intent(MapsActivity.this, PersonalStatistics.class));
+                return true;
+
+            case R.id.action_score:
+                startActivity(new Intent(MapsActivity.this, PersonalScore.class));
+                return true;
+
+            case R.id.action_ranking:
+                startActivity(new Intent(MapsActivity.this, Ranking.class));
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override
