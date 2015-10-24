@@ -32,7 +32,7 @@ public class MapsActivity extends FragmentActivity implements LocationProvider.L
 
     public static final String TAG = MapsActivity.class.getSimpleName();
 
-    public boolean connectionToServer = true; //HIER ANGEBEN, ob Server connected ist oder nicht!!
+    public boolean connectionToServer = false; //HIER ANGEBEN, ob Server connected ist oder nicht!!
 
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
     private LocationProvider mLocationProvider; //class is used to get user's current location
@@ -204,6 +204,7 @@ public class MapsActivity extends FragmentActivity implements LocationProvider.L
         Log.d(TAG, location.toString());
         ownlocation = new LatLng(location.getLatitude(), location.getLongitude()); //save location as LatLng
 
+        if (location == null) {Log.d(TAG, "Location is null!");return;}
         if (checkIfOwnLocationAlreadyDisplayed())
             {return;} //findOwnLocationMarker().remove();} //if current user location is already displayed, remove marker
 
@@ -232,7 +233,8 @@ public class MapsActivity extends FragmentActivity implements LocationProvider.L
             if (stream != null) {
                 UserImportierer mUserImportierer = new UserImportierer(); //create new JSON Parser Object
                 try {
-                    userArray = mUserImportierer.readJsonStream(stream);}
+                    userArray = mUserImportierer.readJsonStream(stream);
+                displayOtherUser(userArray);}
                 catch (IOException e) {
                     e.printStackTrace();
                 }

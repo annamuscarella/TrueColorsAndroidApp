@@ -64,7 +64,6 @@ public class LocationProvider implements
         Location location = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
         if (location == null) {
             LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
-            mLocationCallback.handleNewLocation(location);
         }
         else {
             mLocationCallback.handleNewLocation(location);
