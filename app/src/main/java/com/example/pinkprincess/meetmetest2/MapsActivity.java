@@ -28,24 +28,20 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 
-public class MapsActivity extends FragmentActivity implements LocationProvider.LocationCallback, OnMarkerClickListener, OnMapReadyCallback, HttpRequestInterface {
+public class MapsActivity extends FragmentActivity implements LocationProvider.LocationCallback, OnMarkerClickListener, OnMapReadyCallback, HttpResponseInterface {
 
     public static final String TAG = MapsActivity.class.getSimpleName();
 
-    public boolean connectionToServer = false; //HIER ANGEBEN, ob Server connected ist oder nicht!!
+    HttpRequestInterface httpRequests;
+
+    public boolean connectionToServer = true; //HIER ANGEBEN, ob Server connected ist oder nicht!!
 
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
     private LocationProvider mLocationProvider; //class is used to get user's current location
 
-    private LatLng ownlocation; //variable for storing own current Location
-
-    private String username = "hans";
-
     private Context context;
 
     private ArrayList<Marker> markers = new ArrayList();
-
-    private ArrayList<OtherUser> userArray; //ArrayList for storing recieved JSON objects --> other users near user that should be displayed on the map
 
     private final float MAX_DISTANCE = 2000;
 
@@ -100,6 +96,7 @@ public class MapsActivity extends FragmentActivity implements LocationProvider.L
 
 
 
+        httpRequests = new HttpRequestSender();
         mLocationProvider = new LocationProvider(this, this);
 
 
@@ -202,24 +199,24 @@ public class MapsActivity extends FragmentActivity implements LocationProvider.L
         and from LocationProvider.onLocationChanged() (as soon as user moved)
          */
         Log.d(TAG, location.toString());
-        ownlocation = new LatLng(location.getLatitude(), location.getLongitude()); //save location as LatLng
+        OwnUser.ownLocation = new LatLng(location.getLatitude(), location.getLongitude()); //save location as LatLng
 
         if (location == null) {Log.d(TAG, "Location is null!");return;}
         if (checkIfOwnLocationAlreadyDisplayed())
             {return;} //findOwnLocationMarker().remove();} //if current user location is already displayed, remove marker
 
         MarkerOptions options = new MarkerOptions()
-                .position(ownlocation)
+                .position(OwnUser.ownLocation)
                 .title("I am here!");
         mMap.addMarker(options);
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(ownlocation));
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(ownlocation, 14.5f));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(OwnUser.ownLocation));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(OwnUser.ownLocation, 14.5f));
         //add new marker at current user position
 
         context = this;
         if (connectionToServer) //send http request only if connected to server
         {
-        new HttpRequestSender(context, username, ownlocation.latitude, ownlocation.longitude).execute("anna");
+            httpRequests.doGetOtherUsers(context);
         }
 
         else { //if not connected, use local JSON dokument (assets/otherusers.json)
@@ -233,8 +230,8 @@ public class MapsActivity extends FragmentActivity implements LocationProvider.L
             if (stream != null) {
                 UserImportierer mUserImportierer = new UserImportierer(); //create new JSON Parser Object
                 try {
-                    userArray = mUserImportierer.readJsonStream(stream);
-                displayOtherUser(userArray);}
+                    OwnUser.nearestUserArray = mUserImportierer.readJsonStream(stream);
+                displayOtherUser(OwnUser.nearestUserArray);}
                 catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -266,7 +263,7 @@ public class MapsActivity extends FragmentActivity implements LocationProvider.L
 
 @Override
     public void displayOtherUser(ArrayList<OtherUser> userArray) {
-    this.userArray = userArray;
+    OwnUser.nearestUserArray = userArray;
         for(int i = 0; i<userArray.size(); i++) {
                 LatLng userLoc = userArray.get(i).loc;
                 String userName = userArray.get(i).name;
@@ -274,6 +271,20 @@ public class MapsActivity extends FragmentActivity implements LocationProvider.L
                 String iconColor = userColor + ".gif"; //gif files are stored in the asset folder, iconColor = name of required gif file
             newMarker(userLoc, userName, iconColor);
             }
+    }
+
+    @Override
+    public void userMeetingValidation(String otherUserName, Boolean userMeeting) {
+        if (userMeeting) {
+            for (int i = 0; i < OwnUser.nearestUserArray.size(); i++) {
+                if (OwnUser.nearestUserArray.get(i).name.equals(otherUserName)) {
+                    OwnUser.knownUsers.add(OwnUser.nearestUserArray.get(i));
+                }
+                else{Log.d(TAG, "User nicht gefunden");}
+            }
+        }
+
+        else {return;}
     }
 
 
@@ -313,16 +324,15 @@ public class MapsActivity extends FragmentActivity implements LocationProvider.L
         otherUserLocation.setLongitude(marker.getPosition().longitude);
 
         Location myUserLocation = new Location("");
-        myUserLocation.setLatitude(ownlocation.latitude);
-        myUserLocation.setLongitude(ownlocation.longitude);
+        myUserLocation.setLatitude(OwnUser.ownLocation.latitude);
+        myUserLocation.setLongitude(OwnUser.ownLocation.longitude);
 
         float distance = myUserLocation.distanceTo(otherUserLocation);
 
         if (distance < MAX_DISTANCE) {
-            int i = userArray.size();
-            for (int a=0; a < userArray.size(); a++){
-                if(userArray.get(a).name.equals(marker.getTitle())){
-                    if(userArray.get(a).color.equals("grey")){answer = true;}
+            for (int a=0; a < OwnUser.nearestUserArray.size(); a++){
+                if(OwnUser.nearestUserArray.get(a).name.equals(marker.getTitle())){
+                    if(OwnUser.nearestUserArray.get(a).color.equals("grey")){answer = true;}
                     else{answer = false;}
                 }
             }
