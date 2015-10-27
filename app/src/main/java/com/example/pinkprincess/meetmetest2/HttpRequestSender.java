@@ -26,6 +26,7 @@ public class HttpRequestSender implements HttpRequestInterface {
 
     private static String getOtherUserLink = "meetmeserver/api/gps";
     private static String getUserMeetingLink = "meetmeserver/api/interact";
+    private static String getTeamRanking = "meetmeserver/api/reporting/getTeamStatistics";
 
     private String requestType;
     private Context mapsActivity;
@@ -63,9 +64,9 @@ public class HttpRequestSender implements HttpRequestInterface {
                         urlConnection = (HttpURLConnection) requestUrl.openConnection();
                         response = urlConnection.getInputStream();
                         if (response != null) {
-                            UserImportierer mUserImportierer = new UserImportierer(); //create new JSON Parser Object
+                            ResponseImportierer mResponseImportierer = new ResponseImportierer(); //create new JSON Parser Object
                             try {
-                                OwnUser.nearestUserArray = mUserImportierer.readJsonStream(response); //store JSON Objects from JSON Array as OtherUser Objects in userArray
+                                OwnUser.nearestUserArray = mResponseImportierer.readJsonStream(response); //store JSON Objects from JSON Array as OtherUser Objects in userArray
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }}
@@ -167,12 +168,59 @@ public class HttpRequestSender implements HttpRequestInterface {
 
 
     @Override
-    public void doGetTeamRanking(Context context) {
+    public void doGetUserRanking(Context context) {
+
+        final HttpResponseInterface activity = (HttpResponseInterface) context;
+        new AsyncTask<String, String, ArrayList>(){
+
+            @Override
+            protected ArrayList doInBackground(String... params) {
+                InputStream response = null;
+                try {
+                    requestUrl = new URL("http://"
+                            + IpAdresse
+                            + ":"
+                            + port
+                            + "/"
+                            + getTeamRanking);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+                if (requestUrl != null){
+                    HttpURLConnection urlConnection = null;
+                    try {
+                        urlConnection = (HttpURLConnection) requestUrl.openConnection();
+                        response = urlConnection.getInputStream();
+                        if (response != null) {
+                            ResponseImportierer mResponseImportierer = new ResponseImportierer(); //create new JSON Parser Object
+                            try {
+                                OwnUser.bestuserArray = mResponseImportierer.readJsonStream(response); //store JSON Objects from JSON Array as OtherUser Objects in userArray
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }}
+                        response.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        urlConnection.disconnect();
+                    }
+                    finally {
+                        urlConnection.disconnect();
+                    }
+
+
+                }
+                return OwnUser.bestuserArray;
+            }
+
+            protected void onPostExecute(ArrayList userRanking){
+                activity.displayBestUserRanking(userRanking);
+            }
+        }.execute();
 
     }
 
     @Override
-    public void doGetUserRanking(Context context) {
+    public void doGetTeamRanking(Context context) {
 
     }
 

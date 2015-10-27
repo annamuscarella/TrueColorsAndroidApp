@@ -228,9 +228,9 @@ public class MapsActivity extends FragmentActivity implements LocationProvider.L
                 e.printStackTrace();
             }
             if (stream != null) {
-                UserImportierer mUserImportierer = new UserImportierer(); //create new JSON Parser Object
+                ResponseImportierer mResponseImportierer = new ResponseImportierer(); //create new JSON Parser Object
                 try {
-                    OwnUser.nearestUserArray = mUserImportierer.readJsonStream(stream);
+                    OwnUser.nearestUserArray = mResponseImportierer.readJsonStream(stream);
                 displayOtherUser(OwnUser.nearestUserArray);}
                 catch (IOException e) {
                     e.printStackTrace();
@@ -285,6 +285,11 @@ public class MapsActivity extends FragmentActivity implements LocationProvider.L
         }
 
         else {return;}
+    }
+
+    @Override
+    public void displayBestUserRanking(ArrayList bestUserArray) {
+
     }
 
 
