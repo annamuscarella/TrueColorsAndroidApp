@@ -26,7 +26,7 @@ public class HttpRequestSender implements HttpRequestInterface {
 
     private static String getOtherUserLink = "meetmeserver/api/gps";
     private static String getUserMeetingLink = "meetmeserver/api/interact";
-    private static String getTeamRanking = "meetmeserver/api/reporting/getTeamStatistics";
+    private static String getTeamRanking = "meetmeserver/api/ranking/teamleaderboard";
 
     private String requestType;
     private Context mapsActivity;
@@ -170,12 +170,21 @@ public class HttpRequestSender implements HttpRequestInterface {
     @Override
     public void doGetUserRanking(Context context) {
 
+
+
+    }
+
+    @Override
+    public void doGetTeamRanking(Context context) {
+
         final HttpResponseInterface activity = (HttpResponseInterface) context;
+        String[][] responseStringArray = new String[2][2]; //currently only team german and not-german plus team scores
         new AsyncTask<String, String, ArrayList>(){
 
             @Override
             protected ArrayList doInBackground(String... params) {
                 InputStream response = null;
+                ArrayList arrayListResponse = null;
                 try {
                     requestUrl = new URL("http://"
                             + IpAdresse
@@ -194,7 +203,7 @@ public class HttpRequestSender implements HttpRequestInterface {
                         if (response != null) {
                             ResponseImportierer mResponseImportierer = new ResponseImportierer(); //create new JSON Parser Object
                             try {
-                                OwnUser.bestuserArray = mResponseImportierer.readJsonStream(response); //store JSON Objects from JSON Array as OtherUser Objects in userArray
+                                 arrayListResponse = mResponseImportierer.readJsonStream(response); //store JSON Objects from JSON Array as OtherUser Objects in userArray
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }}
@@ -209,18 +218,13 @@ public class HttpRequestSender implements HttpRequestInterface {
 
 
                 }
-                return OwnUser.bestuserArray;
+                return arrayListResponse;
             }
 
             protected void onPostExecute(ArrayList userRanking){
                 activity.displayBestUserRanking(userRanking);
             }
         }.execute();
-
-    }
-
-    @Override
-    public void doGetTeamRanking(Context context) {
 
         String[][] response = new String[3][2];
         response[0][0] = "123";
@@ -229,7 +233,6 @@ public class HttpRequestSender implements HttpRequestInterface {
         response[1][1] = "USA";
         response[2][0] = "1";
         response[2][1] = "Frankreich";
-        HttpResponseInterface activity = (HttpResponseInterface) context;
         activity.displayTeamRanking(response);
     }
 
