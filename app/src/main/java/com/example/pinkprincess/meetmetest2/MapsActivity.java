@@ -34,7 +34,7 @@ public class MapsActivity extends FragmentActivity implements LocationProvider.L
 
     HttpRequestInterface httpRequests;
 
-    public boolean connectionToServer = true; //HIER ANGEBEN, ob Server connected ist oder nicht!!
+    public static final boolean connectionToServer = false; //HIER ANGEBEN, ob Server connected ist oder nicht!!
 
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
     private LocationProvider mLocationProvider; //class is used to get user's current location
@@ -122,12 +122,12 @@ public class MapsActivity extends FragmentActivity implements LocationProvider.L
                 return true;
 
             case R.id.action_register:
-                startActivity(new Intent(MapsActivity.this, RegisterActivity.class));
+                startActivity(new Intent(MapsActivity.this, RegisterActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY));
                 return true;
 
 
             case R.id.action_login:
-                startActivity(new Intent(MapsActivity.this, LoginActivity.class));
+                startActivity(new Intent(MapsActivity.this, LoginActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY));
                 return true;
 
             case R.id.action_settings:
@@ -135,15 +135,15 @@ public class MapsActivity extends FragmentActivity implements LocationProvider.L
                 return true;
 
             case R.id.action_profile:
-                startActivity(new Intent(MapsActivity.this, PersonalStatistics.class));
+                startActivity(new Intent(MapsActivity.this, PersonalStatistics.class).addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY));
                 return true;
 
             case R.id.action_score:
-                startActivity(new Intent(MapsActivity.this, PersonalScore.class));
+                startActivity(new Intent(MapsActivity.this, PersonalScore.class).addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY));
                 return true;
 
             case R.id.action_ranking:
-                startActivity(new Intent(MapsActivity.this, Ranking.class));
+                startActivity(new Intent(MapsActivity.this, TeamRanking.class).addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -289,7 +289,12 @@ public class MapsActivity extends FragmentActivity implements LocationProvider.L
 
     @Override
     public void displayBestUserRanking(ArrayList bestUserArray) {
+        //not needed
+    }
 
+    @Override
+    public void displayTeamRanking(String[][] teamRankingArray) {
+        //not needed
     }
 
 

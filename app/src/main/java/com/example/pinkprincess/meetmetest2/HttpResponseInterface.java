@@ -9,5 +9,6 @@ public interface HttpResponseInterface {
     public void displayOtherUser(ArrayList<OtherUser> userArray);
     public void userMeetingValidation(String otherUserName, Boolean userMeeting);
     public void displayBestUserRanking(ArrayList bestUserArray);
+    public void displayTeamRanking(String[][] teamRankingArray);
 
 }

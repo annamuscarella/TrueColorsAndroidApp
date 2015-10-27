@@ -79,7 +79,7 @@ public class RegisterActivity extends Activity {
                 return true;
 
             case R.id.action_ranking:
-                startActivity(new Intent(RegisterActivity.this, Ranking.class));
+                startActivity(new Intent(RegisterActivity.this, TeamRanking.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

@@ -7,7 +7,7 @@
 
     android:weightSum="1">
     <TextView
-        android:text="Team Ranking"
+        android:text="User Ranking"
         android:textColor="#A0700F"
         android:gravity="center_horizontal"
         android:layout_width="match_parent"
@@ -28,7 +28,8 @@
         android:layout_height="wrap_content"
         android:stretchColumns="1"
         android:background="#85E13A"
-        android:layout_weight="0.54">
+        android:layout_weight="0.54"
+        android:backgroundTint="#FE642E">
 
         <TableRow>
             <TextView
@@ -46,7 +47,7 @@
                 android:textStyle="bold"
                 android:textSize="40px" />
             <TextView
-                android:text="Team"
+                android:text="User"
                 android:gravity="right"
                 android:padding="20dip"
                 android:textColor="#FFFFFF"
@@ -55,7 +56,7 @@
         </TableRow>
         <View
             android:layout_height="3dip"
-            android:background="#149185" />
+            android:background="#85E13A" />
         <TableRow>
             <TextView
                 android:text="1."
@@ -66,17 +67,17 @@
                 android:text="XXX"
                 android:padding="20dip"
                 android:textColor="#FFFFFF"
-                android:id="@+id/score_player_1" />
+                android:id="@+id/user_score_1" />
             <TextView
-                android:text="Teamname1"
+                android:text="Username1"
                 android:gravity="right"
                 android:padding="20dip"
                 android:textColor="#FFFFFF"
-                android:id="@+id/team_player_1" />
+                android:id="@+id/user_player_1" />
         </TableRow>
         <View
             android:layout_height="3dip"
-            android:background="#149185" />
+            android:background="#85E13A" />
 
         <TableRow>
             <TextView
@@ -88,18 +89,18 @@
                 android:text="XXX"
                 android:padding="20dip"
                 android:textColor="#FFFFFF"
-                android:id="@+id/score_player_2" />
+                android:id="@+id/user_score_2" />
 
             <TextView
-                android:text="Teamname2"
+                android:text="Username2"
                 android:gravity="right"
                 android:padding="20dip"
                 android:textColor="#FFFFFF"
-                android:id="@+id/team_player_2" />
+                android:id="@+id/user_player_2" />
         </TableRow>
         <View
             android:layout_height="3dip"
-            android:background="#149185" />
+            android:background="#85E13A" />
 
         <TableRow>
             <TextView
@@ -111,13 +112,13 @@
                 android:text="XXX"
                 android:padding="20dip"
                 android:textColor="#FFFFFF"
-                android:id="@+id/score_player_3" />
+                android:id="@+id/user_score_3" />
             <TextView
-                android:text="Teamname3"
+                android:text="Username3"
                 android:gravity="right"
                 android:padding="20dip"
                 android:textColor="#FFFFFF"
-                android:id="@+id/team_player_3" />
+                android:id="@+id/user_player_3" />
         </TableRow>
 
 
@@ -132,8 +133,8 @@
 
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Spieler Ranking"
-            android:id="@+id/bSpieler"
+            android:text="Team Ranking"
+            android:id="@+id/bTeam"
             android:background="#149185"
             android:textColor="#FFFFFF"
             android:layout_marginTop="10dp"
@@ -154,7 +155,7 @@
             android:layout_height="wrap_content"
             android:text="Aktualisieren"
             android:id="@+id/bAktualisieren"
-            android:background="#FE642E"
+            android:background="#85E13A"
             android:textColor="#FFFFFF"
             android:layout_marginTop="10dp"
             />

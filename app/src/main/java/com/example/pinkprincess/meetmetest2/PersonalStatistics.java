@@ -68,32 +68,32 @@ public class PersonalStatistics extends Activity {
                 return true;
 
             case R.id.action_homepic:
-                startActivity(new Intent(PersonalStatistics.this,MapsActivity.class));
+                startActivity(new Intent(PersonalStatistics.this,MapsActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY));
                 return true;
             case R.id.action_register:
-                startActivity(new Intent(PersonalStatistics.this, RegisterActivity.class));
+                startActivity(new Intent(PersonalStatistics.this, RegisterActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY));
                 return true;
             case R.id.action_homep:
-                startActivity(new Intent(PersonalStatistics.this, MapsActivity.class));
+                startActivity(new Intent(PersonalStatistics.this, MapsActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY));
                 return true;
 
             case R.id.action_login:
-                startActivity(new Intent(PersonalStatistics.this, LoginActivity.class));
+                startActivity(new Intent(PersonalStatistics.this, LoginActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY));
                 return true;
 
             case R.id.action_settings:
                 Toast.makeText(getApplicationContext(), "Settings Clicked", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.action_profile:
-                startActivity(new Intent(PersonalStatistics.this, PersonalStatistics.class));
+                startActivity(new Intent(PersonalStatistics.this, PersonalStatistics.class).addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY));
                 return true;
 
             case R.id.action_score:
-                startActivity(new Intent(PersonalStatistics.this, PersonalScore.class));
+                startActivity(new Intent(PersonalStatistics.this, PersonalScore.class).addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY));
                 return true;
 
             case R.id.action_ranking:
-                startActivity(new Intent(PersonalStatistics.this, Ranking.class));
+                startActivity(new Intent(PersonalStatistics.this, TeamRanking.class).addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

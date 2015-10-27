@@ -78,7 +78,7 @@ public class LoginActivity extends Activity {
                 return true;
 
             case R.id.action_ranking:
-                startActivity(new Intent(LoginActivity.this, Ranking.class));
+                startActivity(new Intent(LoginActivity.this, TeamRanking.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

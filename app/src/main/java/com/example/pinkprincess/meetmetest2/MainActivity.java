@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 return true;
 
             case R.id.action_ranking:
-                startActivity(new Intent(MainActivity.this, Ranking.class));
+                startActivity(new Intent(MainActivity.this, TeamRanking.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

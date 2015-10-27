@@ -49,33 +49,33 @@ public class PersonalScore extends Activity {
                 return true;
 
             case R.id.action_homepic:
-                startActivity(new Intent(PersonalScore.this,MapsActivity.class));
+                startActivity(new Intent(PersonalScore.this,MapsActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
                 return true;
             case R.id.action_register:
-                startActivity(new Intent(PersonalScore.this, RegisterActivity.class));
+                startActivity(new Intent(PersonalScore.this, RegisterActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
                 return true;
             case R.id.action_homep:
-                startActivity(new Intent(PersonalScore.this, MapsActivity.class));
+                startActivity(new Intent(PersonalScore.this, MapsActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
                 return true;
 
 
             case R.id.action_login:
-                startActivity(new Intent(PersonalScore.this, LoginActivity.class));
+                startActivity(new Intent(PersonalScore.this, LoginActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
                 return true;
 
             case R.id.action_settings:
                 Toast.makeText(getApplicationContext(),"Settings Clicked",Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.action_profile:
-                startActivity(new Intent(PersonalScore.this, PersonalStatistics.class));
+                startActivity(new Intent(PersonalScore.this, PersonalStatistics.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
                 return true;
 
             case R.id.action_score:
-                startActivity(new Intent(PersonalScore.this, PersonalScore.class));
+                startActivity(new Intent(PersonalScore.this, PersonalScore.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
                 return true;
 
             case R.id.action_ranking:
-                startActivity(new Intent(PersonalScore.this, Ranking.class));
+                startActivity(new Intent(PersonalScore.this, TeamRanking.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

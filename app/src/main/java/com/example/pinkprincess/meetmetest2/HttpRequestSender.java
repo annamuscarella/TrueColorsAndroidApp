@@ -222,6 +222,15 @@ public class HttpRequestSender implements HttpRequestInterface {
     @Override
     public void doGetTeamRanking(Context context) {
 
+        String[][] response = new String[3][2];
+        response[0][0] = "123";
+        response[0][1] = "Deutschland";
+        response[1][0] = "12";
+        response[1][1] = "USA";
+        response[2][0] = "1";
+        response[2][1] = "Frankreich";
+        HttpResponseInterface activity = (HttpResponseInterface) context;
+        activity.displayTeamRanking(response);
     }
 
     @Override
