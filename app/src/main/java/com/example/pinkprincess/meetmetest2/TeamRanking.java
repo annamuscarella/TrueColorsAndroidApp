@@ -22,6 +22,7 @@ public class TeamRanking extends Activity implements HttpResponseInterface {
     Button aktualisierenbtn;
     Context context = this;
     HttpRequestInterface httpRequest = new HttpRequestSender();
+    HttpRequestInterface offlineRequest = new OfflineTester();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +36,9 @@ public class TeamRanking extends Activity implements HttpResponseInterface {
             }
         });
 
-        httpRequest.doGetTeamRanking(context);
+        if (MapsActivity.connectionToServer){
+        httpRequest.doGetTeamRanking(context);}
+        else {offlineRequest.doGetTeamRanking(context);}
 
         aktualisierenbtn=(Button)findViewById(R.id.bAktualisieren);
         aktualisierenbtn.setOnClickListener(new View.OnClickListener() {
@@ -127,9 +130,9 @@ public class TeamRanking extends Activity implements HttpResponseInterface {
         teamText[1] = (TextView)findViewById(R.id.team_player_2);
         teamText[2] = (TextView)findViewById(R.id.team_player_3);
 
-        for (int i = 0; i < scoretext.length; i++) {
-            scoretext[i].setText(teamRankingArray[i][0]);
-            teamText[i].setText(teamRankingArray[i][1]);
+        for (int i = 0; i < teamRankingArray.length; i++) {
+            scoretext[i].setText(teamRankingArray[i][1]);
+            teamText[i].setText(teamRankingArray[i][0]);
         }
 
 

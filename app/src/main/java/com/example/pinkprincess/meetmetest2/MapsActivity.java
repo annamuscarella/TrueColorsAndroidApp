@@ -2,6 +2,7 @@ package com.example.pinkprincess.meetmetest2;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.AssetManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -32,14 +33,16 @@ public class MapsActivity extends FragmentActivity implements LocationProvider.L
 
     public static final String TAG = MapsActivity.class.getSimpleName();
 
-    HttpRequestInterface httpRequests;
+    HttpRequestInterface httpRequests = new HttpRequestSender();
+    HttpRequestInterface offlineRequest = new OfflineTester();
 
     public static final boolean connectionToServer = false; //HIER ANGEBEN, ob Server connected ist oder nicht!!
 
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
     private LocationProvider mLocationProvider; //class is used to get user's current location
 
-    private Context context;
+    private Context context = this;
+
 
     private ArrayList<Marker> markers = new ArrayList();
 
@@ -51,7 +54,7 @@ public class MapsActivity extends FragmentActivity implements LocationProvider.L
     private String otherUserCode; //String as first character might be null: int --> 886; string --> "0886"
     private String userCode; //String for storing own code locally (recieved from server at login later)
     private LinearLayout eingabefeld; //windows that appears if user is clicked and users might have met
-
+    public static AssetManager assetManager;
 
 
     @Override
@@ -96,7 +99,6 @@ public class MapsActivity extends FragmentActivity implements LocationProvider.L
 
 
 
-        httpRequests = new HttpRequestSender();
         mLocationProvider = new LocationProvider(this, this);
 
 
@@ -220,29 +222,9 @@ public class MapsActivity extends FragmentActivity implements LocationProvider.L
         }
 
         else { //if not connected, use local JSON dokument (assets/otherusers.json)
-            InputStream stream = null;
-            try {
-                stream = getAssets().open("otherusers.json"); //open JSON document (later: HTTP response, not asset)
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            if (stream != null) {
-                ResponseImportierer mResponseImportierer = new ResponseImportierer(); //create new JSON Parser Object
-                try {
-                    OwnUser.nearestUserArray = mResponseImportierer.readJsonStream(stream);
-                displayOtherUser(OwnUser.nearestUserArray);}
-                catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-            }
-            else {return;}
-
-
-        //displayOtherUser(newRequest.getOtherUsers(username, location.getLatitude(), location.getLatitude()));
-
-}
+            assetManager = getAssets();
+            offlineRequest.doGetOtherUsers(context);
+        }
     }
 
 

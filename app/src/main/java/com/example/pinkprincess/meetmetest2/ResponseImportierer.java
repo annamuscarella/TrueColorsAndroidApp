@@ -14,25 +14,25 @@ import java.util.ArrayList;
  * Created by pinkprincess on 11.10.15.
  */
 public class ResponseImportierer {
-    public ArrayList readJsonStream(InputStream in) throws IOException, NetworkOnMainThreadException {
+    public <F> ArrayList<F> readJsonStream(InputStream in) throws IOException, NetworkOnMainThreadException {
         JsonReader reader = new JsonReader(new InputStreamReader(in, "UTF-8"));
         try {
-            return readJsonObject(reader);
+            return this.<F>readJsonObject(reader);
         } finally {
             reader.close();
         }
 
     }
 
-    public ArrayList readJsonObject(JsonReader reader) throws IOException, NetworkOnMainThreadException {
-        ArrayList objectArray = new ArrayList();
+    public <R> ArrayList<R> readJsonObject(JsonReader reader) throws IOException, NetworkOnMainThreadException {
+        ArrayList<R> objectArray = new ArrayList<R>();
         reader.beginObject();
         while (reader.hasNext()) {
             String test = reader.nextName();
             if (test.equals("userPosition")) {
-                objectArray = readUsersArray(reader);
+                objectArray = this.<R>readUsersArray(reader);
             }
-            if (test.equals("topTeams")) {
+            if (test.equals("topTeamList")) {
                 objectArray = readTeamRankings(reader);
             }
         }
@@ -41,8 +41,8 @@ public class ResponseImportierer {
     }
 
 
-    public ArrayList<OtherUser> readUsersArray(JsonReader reader) throws IOException, NetworkOnMainThreadException {
-        ArrayList<OtherUser> usersArray = new ArrayList();
+    public <R> ArrayList<R> readUsersArray(JsonReader reader) throws IOException, NetworkOnMainThreadException {
+        ArrayList<R> usersArray = new ArrayList();
         reader.beginArray();
         try {
             while (reader.hasNext()) {
@@ -68,7 +68,7 @@ public class ResponseImportierer {
                 }
                 reader.endObject();
                 LatLng loc = new LatLng(lat, lng);
-                usersArray.add(new OtherUser(name, lat, lng, color));
+                usersArray.add((R)new OtherUser(name, lat, lng, color));
             }
         }
         //    }}
@@ -81,8 +81,8 @@ public class ResponseImportierer {
         }
     }
 
-    public ArrayList readTeamRankings(JsonReader reader) throws IOException{
-        ArrayList teamArray = new ArrayList();
+    public <R> ArrayList<R> readTeamRankings(JsonReader reader) throws IOException{
+        ArrayList<R> teamArrayList = new ArrayList<R>();
         reader.beginArray();
         try {
             while (reader.hasNext()) {
@@ -93,11 +93,8 @@ public class ResponseImportierer {
                 reader.beginObject();
                 while (reader.hasNext()) {
                     String test = reader.nextName();
-                    if (test.equals("team")) {
+                    if (test.equals("nation")) {
                         team = reader.nextString();}
-                    else if (test.equals("name")) {
-                        name = reader.nextString();
-                    }
                     else if (test.equals("score")) {
                         score = reader.nextInt();}
                     else {
@@ -105,11 +102,7 @@ public class ResponseImportierer {
                     }
                 }
                 reader.endObject();
-                ArrayList thisTeamArray = new ArrayList();
-                thisTeamArray.add(team);
-                thisTeamArray.add(name);
-                thisTeamArray.add(score);
-                teamArray.add(thisTeamArray);
+                teamArrayList.add((R)(new String[]{team, score.toString()}));
             }
         }
         //    }}
@@ -118,7 +111,7 @@ public class ResponseImportierer {
             e.printStackTrace();
         } finally {
             reader.endArray();
-            return teamArray;
+            return teamArrayList;
         }
     }
 }

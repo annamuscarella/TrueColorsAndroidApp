@@ -178,13 +178,14 @@ public class HttpRequestSender implements HttpRequestInterface {
     public void doGetTeamRanking(Context context) {
 
         final HttpResponseInterface activity = (HttpResponseInterface) context;
-        String[][] responseStringArray = new String[2][2]; //currently only team german and not-german plus team scores
-        new AsyncTask<String, String, ArrayList>(){
+        final String[][] responseStringArray = new String[2][2]; //currently only team german and not-german plus team scores
+        new AsyncTask<String, String, String[][]>(){
 
             @Override
-            protected ArrayList doInBackground(String... params) {
+            protected String[][] doInBackground(String... params) {
                 InputStream response = null;
-                ArrayList arrayListResponse = null;
+                ArrayList<String[]> arrayListResponse = null;
+                String[][] responseStringArray = null;
                 try {
                     requestUrl = new URL("http://"
                             + IpAdresse
@@ -203,7 +204,13 @@ public class HttpRequestSender implements HttpRequestInterface {
                         if (response != null) {
                             ResponseImportierer mResponseImportierer = new ResponseImportierer(); //create new JSON Parser Object
                             try {
-                                 arrayListResponse = mResponseImportierer.readJsonStream(response); //store JSON Objects from JSON Array as OtherUser Objects in userArray
+                                 arrayListResponse = mResponseImportierer.<String[]>readJsonStream(response); //store JSON Objects from JSON Array as OtherUser Objects in userArray
+                                responseStringArray = new String[arrayListResponse.size()][2];
+                                for (int i = 0; i < arrayListResponse.size(); i++) {
+                                    String[] current = arrayListResponse.get(i);
+                                    responseStringArray[i][0] = current[0]; //nation
+                                    responseStringArray[i][1] = current[1]; //score
+                                }
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }}
@@ -218,22 +225,14 @@ public class HttpRequestSender implements HttpRequestInterface {
 
 
                 }
-                return arrayListResponse;
+                return responseStringArray;
             }
 
-            protected void onPostExecute(ArrayList userRanking){
-                activity.displayBestUserRanking(userRanking);
+            protected void onPostExecute(String[][] teamStatistics){
+                activity.displayTeamRanking(teamStatistics);
             }
         }.execute();
 
-        String[][] response = new String[3][2];
-        response[0][0] = "123";
-        response[0][1] = "Deutschland";
-        response[1][0] = "12";
-        response[1][1] = "USA";
-        response[2][0] = "1";
-        response[2][1] = "Frankreich";
-        activity.displayTeamRanking(response);
     }
 
     @Override
