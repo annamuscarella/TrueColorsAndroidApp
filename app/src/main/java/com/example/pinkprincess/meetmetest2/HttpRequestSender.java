@@ -18,7 +18,7 @@ import java.util.StringTokenizer;
  */
 public class HttpRequestSender implements HttpRequestInterface {
 
-    private static String IpAdresse = "172.20.10.6";
+    private static String IpAdresse = "192.168.2.3";
     private static String port = "8087";
     private static URL requestUrl;
     //private Context callbackActivity;
@@ -38,7 +38,7 @@ public class HttpRequestSender implements HttpRequestInterface {
     @Override
     public void doGetOtherUsers(Context context) {
 
-        HttpResponseInterface activity = (HttpResponseInterface) context;
+        final HttpResponseInterface activity = (HttpResponseInterface) context;
         new AsyncTask<String, String, ArrayList<OtherUser>>() {
 
             @Override
@@ -68,7 +68,7 @@ public class HttpRequestSender implements HttpRequestInterface {
                         if (response != null) {
                             ResponseImportierer mResponseImportierer = new ResponseImportierer(); //create new JSON Parser Object
                             try {
-                                OwnUser.nearestUserArray = mResponseImportierer.readJsonStream(response); //store JSON Objects from JSON Array as OtherUser Objects in userArray
+                                OwnUser.nearestUserArray = mResponseImportierer.<OtherUser>readJsonStream(response); //store JSON Objects from JSON Array as OtherUser Objects in userArray
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }}
@@ -87,7 +87,6 @@ public class HttpRequestSender implements HttpRequestInterface {
             }
 
             protected void onPostExecute(ArrayList<OtherUser> userArray) {
-                HttpResponseInterface activity = (HttpResponseInterface) mapsActivity;
                 activity.displayOtherUser(userArray);
             }
 
@@ -172,6 +171,53 @@ public class HttpRequestSender implements HttpRequestInterface {
     @Override
     public void doGetUserRanking(Context context) {
 
+        final HttpResponseInterface activity = (HttpResponseInterface) context;
+
+        new AsyncTask<String, String, String[][]>() {
+            @Override
+            protected String[][] doInBackground(String... params) {
+                String[][] responseStringArray = null; //= new String[2][2]; //currently only team german and not-german plus team scores
+                ArrayList<String[]> responseArrayList = new ArrayList<String[]>();
+                InputStream response = null;
+                try {
+                    requestUrl = new URL("http://"
+                            + IpAdresse
+                            + ":"
+                            + port
+                            + "/"
+                            + getTopUserRankingLink);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+                if (requestUrl != null){
+                    HttpURLConnection urlConnection = null;
+                    try {
+                        urlConnection = (HttpURLConnection) requestUrl.openConnection();
+                        response = urlConnection.getInputStream();
+                        if (response != null) {
+                            ResponseImportierer mResponseImportierer = new ResponseImportierer();
+                            responseArrayList = mResponseImportierer.<String[]>readJsonStream(response);
+                            responseStringArray = new String[responseArrayList.size()][3];
+                            for (int i = 0; i < responseArrayList.size(); i++) {
+                                String[] current = responseArrayList.get(i);
+                                responseStringArray[i][0] = current[0]; //name
+                                responseStringArray[i][1] = current[1]; //nation
+                                responseStringArray[i][2] = current[2]; //score
+                            }
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+
+                return responseStringArray;
+            }
+
+            protected void onPostExecute(String[][] responseStringArray) {
+                activity.displayBestUserRanking(responseStringArray);
+            }
+        }.execute();
 
 
     }
@@ -180,7 +226,7 @@ public class HttpRequestSender implements HttpRequestInterface {
     public void doGetTeamRanking(Context context) {
 
         final HttpResponseInterface activity = (HttpResponseInterface) context;
-        final String[][] responseStringArray = new String[2][2]; //currently only team german and not-german plus team scores
+        //final String[][] responseStringArray = new String[2][2]; //currently only team german and not-german plus team scores
         new AsyncTask<String, String, String[][]>(){
 
             @Override
@@ -239,7 +285,70 @@ public class HttpRequestSender implements HttpRequestInterface {
 
     @Override
     public void doGetFriends(Context context) {
+        final HttpResponseInterface activity = (HttpResponseInterface) context;
+        //String[][] responseStringArray; //= new String[2][2]; //currently only team german and not-german plus team scores
 
+        new AsyncTask<String, String, String[][]>() {
+            ArrayList<String[]> responseArrayList = new ArrayList<String[]>();
+            String[][] responseStringArray = null;
+
+            @Override
+            protected String[][] doInBackground(String... params) {
+                InputStream response = null;
+                {
+                    try {
+                        requestUrl = new URL("http://"
+                                + IpAdresse
+                                + ":"
+                                + port
+                                + "/"
+                                + getFriendsLink
+                                + "/"
+                                + OwnUser.userName
+                        );
+                    } catch (MalformedURLException e) {
+                        e.printStackTrace();
+                    }
+                    if (requestUrl != null){
+                        HttpURLConnection urlConnection = null;
+                        try {
+                            urlConnection = (HttpURLConnection) requestUrl.openConnection();
+                            response = urlConnection.getInputStream();
+                            if (response != null) {
+                                ResponseImportierer mResponseImportierer = new ResponseImportierer(); //create new JSON Parser Object
+                                try {
+                                    responseArrayList = mResponseImportierer.<String[]>readJsonStream(response);
+                                    responseStringArray = new String[responseArrayList.size()][3];
+                                    for (int i = 0; i < responseArrayList.size(); i++) {
+                                        String[] current = responseArrayList.get(i);
+                                        responseStringArray[i][0] = current[0]; //name
+                                        responseStringArray[i][1] = current[1]; //nation
+                                        responseStringArray[i][2] = current[2]; //score
+                                    }
+                                    }
+                                catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            response.close();
+                            }
+
+                         } catch (IOException e) {
+                            urlConnection.disconnect();
+                        }
+                        finally {
+                            urlConnection.disconnect();
+                        }
+
+                    }
+
+                }
+                return responseStringArray;
+            }
+
+            protected void onPostExecute(String[][] responseStringArray) {
+                activity.displayBestUserRanking(responseStringArray);
+            }
+        }.execute();
     }
 
 

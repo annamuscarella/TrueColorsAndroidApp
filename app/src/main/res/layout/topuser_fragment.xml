@@ -15,6 +15,13 @@
         android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
         android:textSize="70px" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView2"
+        android:layout_gravity="right" />
+
     <ImageView
         android:id="@+id/winner_logo"
         android:layout_width="47dp"
@@ -23,106 +30,213 @@
         android:layout_gravity="center"
         android:layout_marginBottom="20dp"/>
 
-    <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:stretchColumns="1"
-        android:background="#85E13A"
-        android:layout_weight="0.54"
-        android:backgroundTint="#FE642E">
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="228dp"
+        android:id="@+id/scrollView"
+        android:layout_weight="0.63">
 
-        <TableRow>
-            <TextView
-                android:text="Platz"
-                android:padding="20dip"
-                android:textColor="#FFFFFF"
-                android:textSize="40px"
-                android:textIsSelectable="true"
-                android:textStyle="bold" />
-            <TextView
-                android:layout_column="1"
-                android:text="Score"
-                android:padding="20dip"
-                android:textColor="#FFFFFF"
-                android:textStyle="bold"
-                android:textSize="40px" />
-            <TextView
-                android:text="User"
-                android:gravity="right"
-                android:padding="20dip"
-                android:textColor="#FFFFFF"
-                android:textSize="40px"
-                android:textStyle="bold" />
-        </TableRow>
-        <View
-            android:layout_height="3dip"
-            android:background="#85E13A" />
-        <TableRow>
-            <TextView
-                android:text="1."
-                android:padding="20dip"
-                android:textColor="#FFFFFF" />
-            <TextView
-                android:layout_column="1"
-                android:text="XXX"
-                android:padding="20dip"
-                android:textColor="#FFFFFF"
-                android:id="@+id/user_score_1" />
-            <TextView
-                android:text="Username1"
-                android:gravity="right"
-                android:padding="20dip"
-                android:textColor="#FFFFFF"
-                android:id="@+id/user_player_1" />
-        </TableRow>
-        <View
-            android:layout_height="3dip"
-            android:background="#85E13A" />
+        <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#85E13A"
+            android:layout_weight="0.54"
+            android:backgroundTint="#FE642E"
+            android:stretchColumns="3"
+            android:shrinkColumns="2">
 
-        <TableRow>
-            <TextView
-                android:text="2."
-                android:padding="20dip"
-                android:textColor="#FFFFFF" />
-            <TextView
-                android:layout_column="1"
-                android:text="XXX"
-                android:padding="20dip"
-                android:textColor="#FFFFFF"
-                android:id="@+id/user_score_2" />
+            <TableRow android:scrollIndicators="top">
+                <TextView
+                    android:text="Platz"
+                    android:padding="20dip"
+                    android:textColor="#FFFFFF"
+                    android:textSize="40px"
+                    android:textIsSelectable="true"
+                    android:textStyle="bold"
+                    android:layout_column="0"
+                    android:layout_width="wrap_content" />
+                <TextView
+                    android:layout_column="1"
+                    android:text="Score"
+                    android:padding="20dip"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    android:textSize="40px" />
 
-            <TextView
-                android:text="Username2"
-                android:gravity="right"
-                android:padding="20dip"
-                android:textColor="#FFFFFF"
-                android:id="@+id/user_player_2" />
-        </TableRow>
-        <View
-            android:layout_height="3dip"
-            android:background="#85E13A" />
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView"
+                    android:layout_column="2" />
 
-        <TableRow>
-            <TextView
-                android:text="3."
-                android:padding="20dip"
-                android:textColor="#FFFFFF" />
-            <TextView
-                android:layout_column="1"
-                android:text="XXX"
-                android:padding="20dip"
-                android:textColor="#FFFFFF"
-                android:id="@+id/user_score_3" />
-            <TextView
-                android:text="Username3"
-                android:gravity="right"
-                android:padding="20dip"
-                android:textColor="#FFFFFF"
-                android:id="@+id/user_player_3" />
-        </TableRow>
+                <TextView
+                    android:text="User"
+                    android:padding="20dip"
+                    android:textColor="#FFFFFF"
+                    android:textSize="40px"
+                    android:textStyle="bold"
+                    android:layout_weight="0.8"
+                    android:layout_column="3"
+                    android:gravity="left" />
+            </TableRow>
+            <View
+                android:layout_height="3dip"
+                android:background="#85E13A" />
+
+            <TableRow>
+                <TextView
+                    android:text="1."
+                    android:padding="20dip"
+                    android:textColor="#FFFFFF"
+                    android:layout_weight="0.1" />
+                <TextView
+                    android:layout_column="1"
+                    android:text="XXX"
+                    android:padding="20dip"
+                    android:textColor="#FFFFFF"
+                    android:id="@+id/user_score_1"
+                    android:layout_weight="0.1" />
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:id="@+id/imageView_user1"
+                    android:src="@drawable/germanflag"
+                    android:layout_gravity="center_vertical"
+                    android:layout_column="2" />
+
+                <TextView
+                    android:text="Username1"
+                    android:gravity="left"
+                    android:padding="20dip"
+                    android:textColor="#FFFFFF"
+                    android:id="@+id/user_player_1"
+                    android:layout_weight="0.7"
+                    android:layout_width="wrap_content" />
+            </TableRow>
+            <View
+                android:layout_height="3dip"
+                android:background="#85E13A" />
+
+            <TableRow>
+                <TextView
+                    android:text="2."
+                    android:padding="20dip"
+                    android:textColor="#FFFFFF" />
+                <TextView
+                    android:layout_column="1"
+                    android:text="XXX"
+                    android:padding="20dip"
+                    android:textColor="#FFFFFF"
+                    android:id="@+id/user_score_2" />
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:id="@+id/imageView_user2"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/australianflag" />
+
+                <TextView
+                    android:text="Username2"
+                    android:padding="20dip"
+                    android:textColor="#FFFFFF"
+                    android:id="@+id/user_player_2"
+                    android:gravity="left" />
+            </TableRow>
+            <View
+                android:layout_height="3dip"
+                android:background="#85E13A" />
+
+            <TableRow>
+                <TextView
+                    android:text="3."
+                    android:padding="20dip"
+                    android:textColor="#FFFFFF" />
+                <TextView
+                    android:layout_column="1"
+                    android:text="XXX"
+                    android:padding="20dip"
+                    android:textColor="#FFFFFF"
+                    android:id="@+id/user_score_3" />
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:id="@+id/imageView_user3"
+                    android:src="@drawable/germanflag"
+                    android:layout_gravity="center_vertical"
+                    android:layout_column="2" />
+                <TextView
+                    android:text="Username3"
+                    android:padding="20dip"
+                    android:textColor="#FFFFFF"
+                    android:id="@+id/user_player_3"
+                    android:gravity="left" />
+            </TableRow>
+            <View
+                android:layout_height="3dip"
+                android:background="#85E13A" />
+
+            <TableRow>
+                <TextView
+                    android:text="4."
+                    android:padding="20dip"
+                    android:textColor="#FFFFFF" />
+                <TextView
+                    android:layout_column="1"
+                    android:text="XXX"
+                    android:padding="20dip"
+                    android:textColor="#FFFFFF"
+                    android:id="@+id/user_score_4" />
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:id="@+id/imageView_user4"
+                    android:src="@drawable/germanflag"
+                    android:layout_gravity="center_vertical"
+                    android:layout_column="2" />
+                <TextView
+                    android:text="Username3"
+                    android:gravity="right"
+                    android:padding="20dip"
+                    android:textColor="#FFFFFF"
+                    android:id="@+id/user_player_4" />
+            </TableRow>
+            <View
+                android:layout_height="3dip"
+                android:background="#85E13A" />
+
+            <TableRow>
+                <TextView
+                    android:text="4."
+                    android:padding="20dip"
+                    android:textColor="#FFFFFF" />
+                <TextView
+                    android:layout_column="1"
+                    android:text="XXX"
+                    android:padding="20dip"
+                    android:textColor="#FFFFFF"
+                    android:id="@+id/user_score_5" />
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:id="@+id/imageView_user5"
+                    android:src="@drawable/germanflag"
+                    android:layout_gravity="center_vertical"
+                    android:layout_column="2" />
+                <TextView
+                    android:text="Username3"
+                    android:padding="20dip"
+                    android:textColor="#FFFFFF"
+                    android:id="@+id/user_player_5"
+                    android:gravity="left" />
+            </TableRow>
 
 
-    </TableLayout>
+
+        </TableLayout>
+    </ScrollView>
+
     <LinearLayout
 
         android:layout_width="match_parent"

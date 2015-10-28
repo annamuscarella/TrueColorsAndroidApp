@@ -36,7 +36,7 @@ public class MapsActivity extends FragmentActivity implements LocationProvider.L
     HttpRequestInterface httpRequests = new HttpRequestSender();
     HttpRequestInterface offlineRequest = new OfflineTester();
 
-    public static final boolean connectionToServer = false; //HIER ANGEBEN, ob Server connected ist oder nicht!!
+    public static final boolean connectionToServer = true; //HIER ANGEBEN, ob Server connected ist oder nicht!!
 
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
     private LocationProvider mLocationProvider; //class is used to get user's current location

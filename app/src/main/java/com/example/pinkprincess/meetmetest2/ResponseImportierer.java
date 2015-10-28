@@ -135,7 +135,7 @@ public class ResponseImportierer {
                     String test = reader.nextName();
                     if (test.equals("nation")) {
                         team = reader.nextString();}
-                    if (test.equals("name")) {
+                    else if (test.equals("name")) {
                         name = reader.nextString();}
                     else if (test.equals("score")) {
                         score = reader.nextInt();}

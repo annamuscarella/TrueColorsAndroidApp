@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -115,18 +116,33 @@ public class UserRanking extends Activity implements HttpResponseInterface {
     @Override
     public void displayBestUserRanking(String[][] bestUserArray) {
 
-        TextView[] scoretext = new TextView[3];
+        TextView[] scoretext = new TextView[5];
         scoretext[0] = (TextView)findViewById(R.id.user_score_1);
         scoretext[1] = (TextView)findViewById(R.id.user_score_2);
         scoretext[2] = (TextView)findViewById(R.id.user_score_3);
+        scoretext[3] = (TextView)findViewById(R.id.user_score_4);
+        scoretext[4] = (TextView)findViewById(R.id.user_score_5);
 
-        TextView[] teamText = new TextView[3];
+        ImageView[] flag = new ImageView[5];
+        flag[0] = (ImageView)findViewById(R.id.imageView_user1);
+        flag[1] = (ImageView)findViewById(R.id.imageView_user2);
+        flag[2] = (ImageView)findViewById(R.id.imageView_user3);
+        flag[3] = (ImageView)findViewById(R.id.imageView_user4);
+        flag[4] = (ImageView)findViewById(R.id.imageView_user5);
+
+        TextView[] teamText = new TextView[5];
         teamText[0] = (TextView)findViewById(R.id.user_player_1);
         teamText[1] = (TextView)findViewById(R.id.user_player_2);
         teamText[2] = (TextView)findViewById(R.id.user_player_3);
+        teamText[3] = (TextView)findViewById(R.id.user_player_4);
+        teamText[4] = (TextView)findViewById(R.id.user_player_5);
 
         for (int i = 0; i < scoretext.length; i++) {
             scoretext[i].setText(bestUserArray[i][2]);
+            if (bestUserArray[i][1].equals("german"))
+            {flag[i].setImageResource(R.drawable.germanflag);}
+            else {
+                flag[i].setImageResource(R.drawable.australianflag);}
             teamText[i].setText(bestUserArray[i][0]);
         }
     }
