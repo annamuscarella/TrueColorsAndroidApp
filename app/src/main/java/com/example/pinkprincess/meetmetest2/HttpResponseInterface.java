@@ -8,7 +8,8 @@ import java.util.ArrayList;
 public interface HttpResponseInterface {
     public void displayOtherUser(ArrayList<OtherUser> userArray);
     public void userMeetingValidation(String otherUserName, Boolean userMeeting);
-    public void displayBestUserRanking(ArrayList bestUserArray);
+    public void displayBestUserRanking(String[][] bestUserArray);
     public void displayTeamRanking(String[][] teamRankingArray);
+    public void displayFriends(String[][] friendArray);
 
 }

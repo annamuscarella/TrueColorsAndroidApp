@@ -27,6 +27,8 @@ public class HttpRequestSender implements HttpRequestInterface {
     private static String getOtherUserLink = "meetmeserver/api/gps";
     private static String getUserMeetingLink = "meetmeserver/api/interact";
     private static String getTeamRanking = "meetmeserver/api/ranking/teamleaderboard";
+    private static String getTopUserRankingLink = "meetmeserver/api/ranking/topplayer";
+    private static String getFriendsLink = "meetmeserver/api/ranking/friendlist";
 
     private String requestType;
     private Context mapsActivity;

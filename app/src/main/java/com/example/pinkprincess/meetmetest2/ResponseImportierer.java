@@ -35,6 +35,12 @@ public class ResponseImportierer {
             if (test.equals("topTeamList")) {
                 objectArray = readTeamRankings(reader);
             }
+            if (test.equals("topPlayer")) {
+                objectArray = readTopUserRankings(reader);
+            }
+            if (test.equals("friends")) {
+                objectArray = readFriends(reader);
+            }
         }
 
         return objectArray;
@@ -112,6 +118,80 @@ public class ResponseImportierer {
         } finally {
             reader.endArray();
             return teamArrayList;
+        }
+    }
+
+    public <R> ArrayList<R> readTopUserRankings(JsonReader reader) throws IOException{
+        ArrayList<R> topUserArrayList = new ArrayList<R>();
+        reader.beginArray();
+        try {
+            while (reader.hasNext()) {
+                String team = null;
+                String name = null;
+                Integer score = null;
+
+                reader.beginObject();
+                while (reader.hasNext()) {
+                    String test = reader.nextName();
+                    if (test.equals("nation")) {
+                        team = reader.nextString();}
+                    if (test.equals("name")) {
+                        name = reader.nextString();}
+                    else if (test.equals("score")) {
+                        score = reader.nextInt();}
+                    else {
+                        reader.skipValue();
+                    }
+                }
+                reader.endObject();
+                topUserArrayList.add((R) (new String[]{name, team, score.toString()}));
+            }
+        }
+        //    }}
+        //catch (IOException e) {System.out.println(e);}
+        catch (NetworkOnMainThreadException e) {
+            e.printStackTrace();
+        } finally {
+            reader.endArray();
+            return topUserArrayList;
+        }
+    }
+
+    public <R> ArrayList<R> readFriends(JsonReader reader) throws IOException{
+        ArrayList<R> friendsArrayList = new ArrayList<R>();
+        reader.beginArray();
+        try {
+            while (reader.hasNext()) {
+                String team = null;
+                String name = null;
+                Integer score = null;
+
+                reader.beginObject();
+                while (reader.hasNext()) {
+                    String test = reader.nextName();
+                    if (test.equals("nation")) {
+                        team = reader.nextString();}
+                    if (test.equals("username")) {
+                        name = reader.nextString();}
+                    else if (test.equals("score")) {
+                        score = reader.nextInt();}
+                    else {
+                        reader.skipValue();
+                    }
+                }
+                reader.endObject();
+                if (team == null) {
+                friendsArrayList.add((R) (new String[]{name, score.toString()}));}
+                else {friendsArrayList.add((R) (new String[]{name, team}));}
+            }
+        }
+        //    }}
+        //catch (IOException e) {System.out.println(e);}
+        catch (NetworkOnMainThreadException e) {
+            e.printStackTrace();
+        } finally {
+            reader.endArray();
+            return friendsArrayList;
         }
     }
 }

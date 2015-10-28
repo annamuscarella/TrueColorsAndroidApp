@@ -22,6 +22,7 @@ public class UserRanking extends Activity implements HttpResponseInterface {
     Button aktualisierenbtn;
     Context context = this;
     HttpRequestInterface httpRequest = new HttpRequestSender();
+    HttpRequestInterface offlineRequest = new OfflineTester();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +36,8 @@ public class UserRanking extends Activity implements HttpResponseInterface {
             }
         });
 
-        httpRequest.doGetUserRanking(context);
+        if (MapsActivity.connectionToServer){httpRequest.doGetUserRanking(context);}
+        else {offlineRequest.doGetUserRanking(context);}
 
         aktualisierenbtn=(Button)findViewById(R.id.bAktualisieren);
         aktualisierenbtn.setOnClickListener(new View.OnClickListener() {
@@ -111,9 +113,8 @@ public class UserRanking extends Activity implements HttpResponseInterface {
     } //not needed
 
     @Override
-    public void displayBestUserRanking(ArrayList bestUserArray) {
+    public void displayBestUserRanking(String[][] bestUserArray) {
 
-        String[][] testArray = {{"123","pink_princess2828"},{"12","hans"},{"1","jesus"}};
         TextView[] scoretext = new TextView[3];
         scoretext[0] = (TextView)findViewById(R.id.user_score_1);
         scoretext[1] = (TextView)findViewById(R.id.user_score_2);
@@ -125,8 +126,8 @@ public class UserRanking extends Activity implements HttpResponseInterface {
         teamText[2] = (TextView)findViewById(R.id.user_player_3);
 
         for (int i = 0; i < scoretext.length; i++) {
-            scoretext[i].setText(testArray[i][0]);
-            teamText[i].setText(testArray[i][1]);
+            scoretext[i].setText(bestUserArray[i][2]);
+            teamText[i].setText(bestUserArray[i][0]);
         }
     }
 
@@ -134,6 +135,11 @@ public class UserRanking extends Activity implements HttpResponseInterface {
     public void displayTeamRanking(String[][] teamRankingArray) {
         //not needed
 
+
+    }
+
+    @Override
+    public void displayFriends(String[][] friendArray) {
 
     }
 }

@@ -270,13 +270,18 @@ public class MapsActivity extends FragmentActivity implements LocationProvider.L
     }
 
     @Override
-    public void displayBestUserRanking(ArrayList bestUserArray) {
+    public void displayBestUserRanking(String[][] bestUserArray) {
         //not needed
     }
 
     @Override
     public void displayTeamRanking(String[][] teamRankingArray) {
         //not needed
+    }
+
+    @Override
+    public void displayFriends(String[][] friendArray) {
+
     }
 
 

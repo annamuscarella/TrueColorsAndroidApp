@@ -44,8 +44,8 @@ public class TeamRanking extends Activity implements HttpResponseInterface {
         aktualisierenbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(),"Aktualisieren Clicked",Toast.LENGTH_SHORT).show();
-                 httpRequest.doGetTeamRanking(context);//SEND REQUEST HERE
+                Toast.makeText(getApplicationContext(), "Aktualisieren Clicked", Toast.LENGTH_SHORT).show();
+                httpRequest.doGetTeamRanking(context);//SEND REQUEST HERE
             }
         });
 
@@ -114,9 +114,10 @@ public class TeamRanking extends Activity implements HttpResponseInterface {
     } //not needed
 
     @Override
-    public void displayBestUserRanking(ArrayList bestUserArray) {
+    public void displayBestUserRanking(String[][] bestUserArray) {
 
-    } //not needed
+    }
+
 
     @Override
     public void displayTeamRanking(String[][] teamRankingArray) {
@@ -135,6 +136,11 @@ public class TeamRanking extends Activity implements HttpResponseInterface {
             teamText[i].setText(teamRankingArray[i][0]);
         }
 
+
+    }
+
+    @Override
+    public void displayFriends(String[][] friendArray) {
 
     }
 }
