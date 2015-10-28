@@ -94,16 +94,18 @@ public class HttpRequestSender implements HttpRequestInterface {
     }
 
     @Override
-    public void doGetUserMeeting(final Context context, final String otherUserName, final String verificationCode) {
+    public void doGetUserMeeting(final Context context, String otherUserName, String verificationCode) {
 
         final HttpResponseInterface activity = (HttpResponseInterface) context;
         final String otherUser = otherUserName;
         final String code = verificationCode;
-        new AsyncTask<String, Void, Boolean>(){
+        new AsyncTask<String, Void, String[]>(){
 
             @Override
-            protected Boolean doInBackground(String... params) {
+            protected String[] doInBackground(String... params) {
                 Boolean validationResponse = false;
+                String[] responseString = null;
+                String otherUserColor = null;
                 InputStream response = null;
                 try {
                     requestUrl = new URL("http://"
@@ -133,15 +135,14 @@ public class HttpRequestSender implements HttpRequestInterface {
                             total.append(line);
                         }
                         if (total != null) {
-                            String[] responseElements = new String[2];
+                            String[] responseElements = new String[4];
                             int i = 0;
                             StringTokenizer seperator = new StringTokenizer(total.toString(),";");
                             while(seperator.hasMoreElements()) {
                                 responseElements[i] = seperator.nextElement().toString();
                                 i++;
                             }
-                            validationResponse = Boolean.parseBoolean(responseElements[0]);
-                            OwnUser.score = Integer.parseInt(responseElements[1]);
+                            responseString = responseElements;
                         }
                         else {System.out.println("response is null!");}
 
@@ -157,10 +158,18 @@ public class HttpRequestSender implements HttpRequestInterface {
                 }
 
 
-                return validationResponse;
+                return responseString;
             }
 
-            protected void onPostExecute(Boolean validationResponse){
+            protected void onPostExecute(String[] responseString){
+                Boolean validationResponse = Boolean.parseBoolean(responseString[0]);
+                //otherUserColor = responseString[2];
+                OwnUser.score = Integer.parseInt(responseString[1]);
+                for (int i = 0; i<OwnUser.nearestUserArray.size(); i++) {
+                    if(OwnUser.nearestUserArray.get(i).name.equals(otherUser)){
+                        OwnUser.nearestUserArray.get(i).color = responseString[2];
+                    }
+                }
                 activity.userMeetingValidation(otherUser, validationResponse);
             }
             }.execute();

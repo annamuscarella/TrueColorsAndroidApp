@@ -43,6 +43,8 @@ public class MapsActivity extends FragmentActivity implements LocationProvider.L
 
     private Context context = this;
 
+    private Marker lastMarkerClicked;
+
 
     private ArrayList<Marker> markers = new ArrayList();
 
@@ -74,6 +76,7 @@ public class MapsActivity extends FragmentActivity implements LocationProvider.L
                                           }
                                           else {
                                               otherUserCode = codeEingabe.getText().toString();
+                                              httpRequests.doGetUserMeeting(context, lastMarkerClicked.getTitle(), otherUserCode);
                                               eingabefeld.setVisibility(View.GONE);
                                               codeEingabe.setText("");
                                           }
@@ -245,6 +248,7 @@ public class MapsActivity extends FragmentActivity implements LocationProvider.L
 
 @Override
     public void displayOtherUser(ArrayList<OtherUser> userArray) {
+    if (markers.isEmpty()) {
     OwnUser.nearestUserArray = userArray;
         for(int i = 0; i<userArray.size(); i++) {
                 LatLng userLoc = userArray.get(i).loc;
@@ -252,21 +256,23 @@ public class MapsActivity extends FragmentActivity implements LocationProvider.L
                 String userColor = userArray.get(i).color;
                 String iconColor = userColor + ".gif"; //gif files are stored in the asset folder, iconColor = name of required gif file
             newMarker(userLoc, userName, iconColor);
-            }
+          }
+    }
+    else {
+        while(!markers.isEmpty()){
+            int a = markers.size()-1;
+            markers.get(a).remove();
+            markers.remove(a);
+        }
+            displayOtherUser(OwnUser.nearestUserArray);
+    }
     }
 
     @Override
     public void userMeetingValidation(String otherUserName, Boolean userMeeting) {
         if (userMeeting) {
-            for (int i = 0; i < OwnUser.nearestUserArray.size(); i++) {
-                if (OwnUser.nearestUserArray.get(i).name.equals(otherUserName)) {
-                    OwnUser.knownUsers.add(OwnUser.nearestUserArray.get(i));
-                }
-                else{Log.d(TAG, "User nicht gefunden");}
-            }
-        }
-
-        else {return;}
+            displayOtherUser(OwnUser.nearestUserArray);}
+        else{Log.d(TAG, "User nicht gefunden");}
     }
 
     @Override
@@ -285,7 +291,7 @@ public class MapsActivity extends FragmentActivity implements LocationProvider.L
     }
 
 
-    private void newMarker(LatLng location, String title, String graphic) {
+    private void newMarker(LatLng location, final String title, String graphic) {
         MarkerOptions options = new MarkerOptions()
                 .position(location) //other user's location
                 .title(title) //other user's user ID/name
@@ -295,6 +301,7 @@ public class MapsActivity extends FragmentActivity implements LocationProvider.L
             @Override
             public boolean onMarkerClick(Marker marker) {
                 Log.d(TAG, "Marker " + marker + "wurde angeklickt");
+                lastMarkerClicked = marker;
 
                 if (checkIfPossibleMeeting(marker)){ //check if distance between users is less than 2km and other user's color is green
                     eingabefeld.setVisibility(View.VISIBLE);} //if users might have met, display field for entering the other user's code
