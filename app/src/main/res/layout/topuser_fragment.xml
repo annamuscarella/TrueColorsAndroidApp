@@ -48,32 +48,45 @@
             <TableRow android:scrollIndicators="top">
                 <TextView
                     android:text="Platz"
-                    android:padding="20dip"
                     android:textColor="#FFFFFF"
-                    android:textSize="40px"
+                    android:textSize="30px"
                     android:textIsSelectable="true"
                     android:textStyle="bold"
                     android:layout_column="0"
-                    android:layout_width="wrap_content" />
+                    android:layout_width="wrap_content"
+                    android:paddingRight="10dip"
+                    android:paddingLeft="20dip"
+                    android:paddingTop="20dip"
+                    android:paddingBottom="20dip" />
                 <TextView
                     android:layout_column="1"
                     android:text="Score"
-                    android:padding="20dip"
                     android:textColor="#FFFFFF"
                     android:textStyle="bold"
-                    android:textSize="40px" />
+                    android:textSize="30px"
+                    android:paddingLeft="10dip"
+                    android:paddingTop="20dip"
+                    android:paddingRight="10dip"
+                    android:paddingBottom="20dip" />
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/textView"
-                    android:layout_column="2" />
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="20dp"
+                    android:id="@+id/imageView_invisible"
+                    android:src="@drawable/germanflag"
+                    android:layout_gravity="center_vertical"
+                    android:layout_column="2"
+                    android:minWidth="20dp"
+                    android:minHeight="20dp"
+                    android:adjustViewBounds="true"
+                    android:layout_span="1"
+                    android:visibility="invisible" />
 
                 <TextView
                     android:text="User"
                     android:padding="20dip"
                     android:textColor="#FFFFFF"
-                    android:textSize="40px"
+                    android:textSize="30px"
                     android:textStyle="bold"
                     android:layout_weight="0.8"
                     android:layout_column="3"
@@ -88,22 +101,29 @@
                     android:text="1."
                     android:padding="20dip"
                     android:textColor="#FFFFFF"
-                    android:layout_weight="0.1" />
+                    android:layout_column="0" />
                 <TextView
                     android:layout_column="1"
                     android:text="XXX"
-                    android:padding="20dip"
                     android:textColor="#FFFFFF"
                     android:id="@+id/user_score_1"
-                    android:layout_weight="0.1" />
+                    android:gravity="center_horizontal"
+                    android:paddingLeft="10dip"
+                    android:paddingTop="20dip"
+                    android:paddingRight="10dip"
+                    android:paddingBottom="20dip" />
 
                 <ImageView
-                    android:layout_width="20dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="20dp"
                     android:id="@+id/imageView_user1"
                     android:src="@drawable/germanflag"
                     android:layout_gravity="center_vertical"
-                    android:layout_column="2" />
+                    android:layout_column="2"
+                    android:minWidth="20dp"
+                    android:minHeight="20dp"
+                    android:adjustViewBounds="true"
+                    android:layout_span="1" />
 
                 <TextView
                     android:text="Username1"
@@ -111,8 +131,8 @@
                     android:padding="20dip"
                     android:textColor="#FFFFFF"
                     android:id="@+id/user_player_1"
-                    android:layout_weight="0.7"
-                    android:layout_width="wrap_content" />
+                    android:layout_width="wrap_content"
+                    android:layout_column="3" />
             </TableRow>
             <View
                 android:layout_height="3dip"
@@ -126,16 +146,22 @@
                 <TextView
                     android:layout_column="1"
                     android:text="XXX"
-                    android:padding="20dip"
                     android:textColor="#FFFFFF"
-                    android:id="@+id/user_score_2" />
+                    android:id="@+id/user_score_2"
+                    android:gravity="center_horizontal"
+                    android:paddingLeft="10dip"
+                    android:paddingTop="20dip"
+                    android:paddingRight="10dip"
+                    android:paddingBottom="20dip" />
 
                 <ImageView
-                    android:layout_width="20dp"
+                    android:layout_width="30dp"
                     android:layout_height="20dp"
                     android:id="@+id/imageView_user2"
                     android:layout_gravity="center_vertical"
-                    android:src="@drawable/australianflag" />
+                    android:src="@drawable/australianflag"
+                    android:adjustViewBounds="true"
+                    android:importantForAccessibility="yes" />
 
                 <TextView
                     android:text="Username2"
@@ -156,16 +182,21 @@
                 <TextView
                     android:layout_column="1"
                     android:text="XXX"
-                    android:padding="20dip"
                     android:textColor="#FFFFFF"
-                    android:id="@+id/user_score_3" />
+                    android:id="@+id/user_score_3"
+                    android:gravity="center_horizontal"
+                    android:paddingLeft="10dip"
+                    android:paddingTop="20dip"
+                    android:paddingRight="10dip"
+                    android:paddingBottom="20dip" />
                 <ImageView
-                    android:layout_width="20dp"
+                    android:layout_width="30dp"
                     android:layout_height="20dp"
                     android:id="@+id/imageView_user3"
                     android:src="@drawable/germanflag"
                     android:layout_gravity="center_vertical"
-                    android:layout_column="2" />
+                    android:layout_column="2"
+                    android:adjustViewBounds="true" />
                 <TextView
                     android:text="Username3"
                     android:padding="20dip"
@@ -180,27 +211,32 @@
             <TableRow>
                 <TextView
                     android:text="4."
-                    android:padding="20dip"
-                    android:textColor="#FFFFFF" />
+                    android:textColor="#FFFFFF"
+                    android:padding="20dip" />
                 <TextView
                     android:layout_column="1"
                     android:text="XXX"
-                    android:padding="20dip"
                     android:textColor="#FFFFFF"
-                    android:id="@+id/user_score_4" />
+                    android:id="@+id/user_score_4"
+                    android:paddingLeft="10dip"
+                    android:paddingTop="20dip"
+                    android:paddingRight="10dip"
+                    android:paddingBottom="20dip"
+                    android:gravity="center_horizontal" />
                 <ImageView
-                    android:layout_width="20dp"
+                    android:layout_width="30dp"
                     android:layout_height="20dp"
                     android:id="@+id/imageView_user4"
                     android:src="@drawable/germanflag"
                     android:layout_gravity="center_vertical"
-                    android:layout_column="2" />
+                    android:layout_column="2"
+                    android:adjustViewBounds="true" />
                 <TextView
                     android:text="Username3"
-                    android:gravity="right"
                     android:padding="20dip"
                     android:textColor="#FFFFFF"
-                    android:id="@+id/user_player_4" />
+                    android:id="@+id/user_player_4"
+                    android:gravity="left" />
             </TableRow>
             <View
                 android:layout_height="3dip"
@@ -208,7 +244,7 @@
 
             <TableRow>
                 <TextView
-                    android:text="4."
+                    android:text="5."
                     android:padding="20dip"
                     android:textColor="#FFFFFF" />
                 <TextView
@@ -216,14 +252,16 @@
                     android:text="XXX"
                     android:padding="20dip"
                     android:textColor="#FFFFFF"
-                    android:id="@+id/user_score_5" />
+                    android:id="@+id/user_score_5"
+                    android:gravity="center_horizontal" />
                 <ImageView
-                    android:layout_width="20dp"
+                    android:layout_width="30dp"
                     android:layout_height="20dp"
                     android:id="@+id/imageView_user5"
                     android:src="@drawable/germanflag"
                     android:layout_gravity="center_vertical"
-                    android:layout_column="2" />
+                    android:layout_column="2"
+                    android:adjustViewBounds="true" />
                 <TextView
                     android:text="Username3"
                     android:padding="20dip"

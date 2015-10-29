@@ -29,7 +29,7 @@ public class FriendList extends Activity {
         TableRow.LayoutParams textParams = new TableRow.LayoutParams(TableRow.LayoutParams.FILL_PARENT, TableRow.LayoutParams.WRAP_CONTENT);
         textParams.setMargins(20, 20, 20, 40);
         TableRow.LayoutParams picParams = new TableRow.LayoutParams(TableRow.LayoutParams.FILL_PARENT, TableRow.LayoutParams.WRAP_CONTENT);
-        picParams.setMargins(40, 20, 20, 20);
+        picParams.setMargins(20, 20, 20, 20);
         TableLayout mTableLayout = (TableLayout) findViewById(R.id.friend_tableLayout);
         mTableLayout.removeAllViews();
         for (int i=0; i<friends.length; i++){
@@ -41,19 +41,26 @@ public class FriendList extends Activity {
             else {row.setBackgroundResource(R.color.roworange);}
             TextView name = new TextView(this);
             name.setLayoutParams(textParams);
-            name.setTextSize(25);
+            name.setTextSize(17);
             name.setTextColor(Color.rgb(255, 255, 255));
-            TextView nation = new TextView(this);
+            //TextView nation = new TextView(this);
+            ImageView nation = new ImageView(this);
             nation.setLayoutParams(textParams);
-            nation.setTextSize(25);
-            nation.setTextColor(Color.rgb(255, 255, 255));
+            nation.setLayoutParams(picParams);
+            nation.setAdjustViewBounds(true);
+            nation.setMaxHeight(30);
+            //nation.setTextSize(20);
+            //nation.setTextColor(Color.rgb(255, 255, 255));
             ImageView picture = new ImageView(this);
             picture.setLayoutParams(picParams);
             picture.setAdjustViewBounds(true);
-            picture.setMaxHeight(100);
-            picture.setLeft(90);
+            picture.setMaxHeight(80);
             name.setText(friends[i][0]);
-            nation.setText(friends[i][1]);
+            if(friends[i][1].equals("german")){
+                nation.setImageResource(R.drawable.germanflag);
+            }
+            else {nation.setImageResource(R.drawable.australianflag);}
+            //nation.setText(friends[i][1]);
             picture.setImageResource(R.drawable.profilepic);
 
 

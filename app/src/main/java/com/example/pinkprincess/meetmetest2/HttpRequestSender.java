@@ -355,7 +355,7 @@ public class HttpRequestSender implements HttpRequestInterface {
             }
 
             protected void onPostExecute(String[][] responseStringArray) {
-                        activity.displayBestUserRanking(responseStringArray);
+                        activity.displayFriends(responseStringArray);
             }
         }.execute();
     }
