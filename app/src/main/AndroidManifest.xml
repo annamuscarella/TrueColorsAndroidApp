@@ -57,6 +57,7 @@
     <activity android:name=".PersonalStatistics"></activity>
     <activity android:name=".TeamRanking"></activity>
         <activity android:name=".UserRanking"></activity>
+        <activity android:name=".FriendList"></activity>
     <activity android:name=".RegisterActivity"></activity>
     </application>
 

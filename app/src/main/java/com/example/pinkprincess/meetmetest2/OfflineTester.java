@@ -112,7 +112,7 @@ public class OfflineTester implements HttpRequestInterface {
     @Override
     public void doGetFriends(Context context) {
 
-        final HttpResponseInterface activity = (HttpResponseInterface) context;
+        /*final HttpResponseInterface activity = (HttpResponseInterface) context;
         String[][] responseStringArray; //= new String[2][2]; //currently only team german and not-german plus team scores
         ArrayList<String[]> responseArrayList = new ArrayList<String[]>();
         InputStream stream = null;
@@ -140,7 +140,11 @@ public class OfflineTester implements HttpRequestInterface {
             }
 
         }
-        else {return;}
+        else {return;}*/
+
+        String[][] friendarray = {{"anna","german"}, {"nina", "nongerman"}, {"HeWhoMustNotBeNamed", "nongerman"}, {"jesus", "german"}};
+        HttpResponseInterface activity = (HttpResponseInterface) context;
+        activity.displayFriends(friendarray);
     }
 
 

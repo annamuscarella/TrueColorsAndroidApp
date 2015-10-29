@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="primary_material_dark">#f44336</color>
+    <color name="rowwhite">#ffffff</color>
+    <color name="roworange">#FE642E</color>
+    <color name="hellgruen">#85E13A</color>
 </resources>

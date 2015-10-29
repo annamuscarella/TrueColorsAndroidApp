@@ -94,7 +94,7 @@ public class HttpRequestSender implements HttpRequestInterface {
     }
 
     @Override
-    public void doGetUserMeeting(final Context context, String otherUserName, String verificationCode) {
+    public void doGetUserMeeting(Context context, String otherUserName, String verificationCode) {
 
         final HttpResponseInterface activity = (HttpResponseInterface) context;
         final String otherUser = otherUserName;
@@ -294,6 +294,7 @@ public class HttpRequestSender implements HttpRequestInterface {
 
     @Override
     public void doGetFriends(Context context) {
+        Context con = context;
         final HttpResponseInterface activity = (HttpResponseInterface) context;
         //String[][] responseStringArray; //= new String[2][2]; //currently only team german and not-german plus team scores
 
@@ -327,12 +328,11 @@ public class HttpRequestSender implements HttpRequestInterface {
                                 ResponseImportierer mResponseImportierer = new ResponseImportierer(); //create new JSON Parser Object
                                 try {
                                     responseArrayList = mResponseImportierer.<String[]>readJsonStream(response);
-                                    responseStringArray = new String[responseArrayList.size()][3];
+                                    responseStringArray = new String[responseArrayList.size()][2];
                                     for (int i = 0; i < responseArrayList.size(); i++) {
                                         String[] current = responseArrayList.get(i);
                                         responseStringArray[i][0] = current[0]; //name
                                         responseStringArray[i][1] = current[1]; //nation
-                                        responseStringArray[i][2] = current[2]; //score
                                     }
                                     }
                                 catch (IOException e) {
@@ -355,7 +355,7 @@ public class HttpRequestSender implements HttpRequestInterface {
             }
 
             protected void onPostExecute(String[][] responseStringArray) {
-                activity.displayBestUserRanking(responseStringArray);
+                        activity.displayBestUserRanking(responseStringArray);
             }
         }.execute();
     }

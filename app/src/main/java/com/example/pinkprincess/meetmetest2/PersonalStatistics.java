@@ -1,33 +1,46 @@
 package com.example.pinkprincess.meetmetest2;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
 
 /**
  * Created by mahandru on 22.10.2015.
  */
-public class PersonalStatistics extends Activity {
+public class PersonalStatistics extends Activity implements HttpResponseInterface {
 
     Button freundschaftbtn;
     Button punktestandbtn;
     Button deinteambtn;
+    Context context = this;
 
+    HttpRequestInterface httprequests = new HttpRequestSender();
+    HttpRequestInterface offlineRequest = new OfflineTester();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.report_profile);
 
+        TextView name = (TextView) findViewById(R.id.profile_username);
+        name.setText(OwnUser.userName);
+
         freundschaftbtn=(Button)findViewById(R.id.bFriends);
         freundschaftbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "Freundschaft Clicked", Toast.LENGTH_SHORT).show();
+                if(MapsActivity.connectionToServer){
+                    httprequests.doGetFriends(context);
+                }
+                else {offlineRequest.doGetFriends(context);}
             }
         });
 
@@ -35,7 +48,7 @@ public class PersonalStatistics extends Activity {
         punktestandbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(),"Punktestand Clicked",Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(PersonalStatistics.this, PersonalScore.class).addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY));
             }
         });
         deinteambtn=(Button)findViewById(R.id.b);
@@ -98,5 +111,40 @@ public class PersonalStatistics extends Activity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void displayOtherUser(ArrayList<OtherUser> userArray) {
+
+    }
+
+    @Override
+    public void userMeetingValidation(String otherUserName, Boolean userMeeting) {
+
+    }
+
+    @Override
+    public void displayBestUserRanking(String[][] bestUserArray) {
+
+    }
+
+    @Override
+    public void displayTeamRanking(String[][] teamRankingArray) {
+
+    }
+
+    @Override
+    public void displayFriends(String[][] friendArray) {
+        FriendList.friends = friendArray;
+        startActivity(new Intent(PersonalStatistics.this, FriendList.class).addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY));
+
+
+
+        /*String name;
+        String nation;
+        for(int i = 0; i < friendArray.length; i++){
+            name = friendArray[i][0];
+            nation = friendArray[i][1];*/
+        //}
     }
 }

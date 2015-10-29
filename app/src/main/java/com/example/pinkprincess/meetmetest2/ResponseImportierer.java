@@ -157,7 +157,7 @@ public class ResponseImportierer {
         }
     }
 
-    public <R> ArrayList<R> readFriends(JsonReader reader) throws IOException{
+    public <R> ArrayList<R> readFriends(JsonReader reader) throws IOException{ //method for interpreting friend request
         ArrayList<R> friendsArrayList = new ArrayList<R>();
         reader.beginArray();
         try {
@@ -171,7 +171,7 @@ public class ResponseImportierer {
                     String test = reader.nextName();
                     if (test.equals("nation")) {
                         team = reader.nextString();}
-                    if (test.equals("username")) {
+                    else if (test.equals("username")) {
                         name = reader.nextString();}
                     else if (test.equals("score")) {
                         score = reader.nextInt();}
@@ -181,8 +181,8 @@ public class ResponseImportierer {
                 }
                 reader.endObject();
                 if (team == null) {
-                friendsArrayList.add((R) (new String[]{name, score.toString()}));}
-                else {friendsArrayList.add((R) (new String[]{name, team}));}
+                friendsArrayList.add((R) (new String[]{name, score.toString()}));} //not sure yet if nation or score will be displayed
+                else {friendsArrayList.add((R) (new String[]{name, team}));} //returns two dimensional array
             }
         }
         //    }}

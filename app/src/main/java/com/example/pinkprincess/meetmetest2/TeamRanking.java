@@ -124,12 +124,12 @@ public class TeamRanking extends Activity implements HttpResponseInterface {
         TextView[] scoretext = new TextView[3];
         scoretext[0] = (TextView)findViewById(R.id.score_player_1);
         scoretext[1] = (TextView)findViewById(R.id.score_player_2);
-        scoretext[2] = (TextView)findViewById(R.id.score_player_3);
+        //scoretext[2] = (TextView)findViewById(R.id.score_player_3);
 
         TextView[] teamText = new TextView[3];
         teamText[0] = (TextView)findViewById(R.id.team_player_1);
         teamText[1] = (TextView)findViewById(R.id.team_player_2);
-        teamText[2] = (TextView)findViewById(R.id.team_player_3);
+       // teamText[2] = (TextView)findViewById(R.id.team_player_3);
 
         for (int i = 0; i < teamRankingArray.length; i++) {
             scoretext[i].setText(teamRankingArray[i][1]);

@@ -14,8 +14,7 @@ public abstract class OwnUser {
     static String userName = "hans";
     static String userColor = "red";
     static LatLng ownLocation;
-    static Integer score;
-    static String lastUserClicked;
+    static Integer score = 2;
     static String userCode; //String for storing own code locally (recieved from server at login later)
     static ArrayList<OtherUser> nearestUserArray; //ArrayList for storing recieved JSON objects --> other users near user that should be displayed on the map
     static ArrayList<OtherUser> knownUsers;

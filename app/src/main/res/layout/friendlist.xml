@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical" android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+    <TextView
+        android:text="Freunde"
+        android:textColor="#A0700F"
+        android:gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="15dp"
+        android:textSize="70px"
+        android:id="@+id/textView4" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="58dp"
+        android:layout_height="58dp"
+        android:src="@drawable/friendicon"
+        android:layout_gravity="center"
+        android:layout_marginBottom="15dp" />
+
+    <ScrollView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            xmlns:android="http://schemas.android.com/apk/res/android">
+        <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:stretchColumns="1"
+            android:id="@+id/friend_tableLayout">
+            <View
+                android:layout_height="5dip"
+                android:background="#85E13A" />
+
+            <TableRow
+                android:background="#149185"
+                android:id="@+id/row_green">
+
+                <ImageView
+                    android:id="@+id/profilpic"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/profilepic"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginTop="40px"
+                    android:layout_marginLeft="20px"
+                    android:layout_column="0" />
+
+                <TextView
+                    android:layout_column="1"
+                    android:text="Username"
+                    android:padding="20dip"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    android:textSize="40px" />
+                <TextView
+                    android:text="Team"
+                    android:gravity="right"
+                    android:padding="20dip"
+                    android:textColor="#FFFFFF"
+                    android:textSize="40px"
+                    android:textStyle="bold" />
+            </TableRow>
+
+
+            <View
+                android:layout_height="5dip"
+                android:background="#85E13A" />
+
+        </TableLayout>
+        </ScrollView>
+    </LinearLayout>

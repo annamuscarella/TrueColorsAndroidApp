@@ -46,14 +46,30 @@
                 android:padding="20dip"
                 android:textColor="#FFFFFF"
                 android:textStyle="bold"
-                android:textSize="40px" />
+                android:textSize="60px"
+                android:id="@+id/profile_username"
+                android:layout_width="wrap_content"
+                android:allowUndo="false" />
+
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:id="@+id/imageView3"
+                android:src="@drawable/germanflag"
+                android:layout_gravity="center_vertical"
+                android:adjustViewBounds="true"
+                android:paddingRight="20dp"
+                android:layout_column="2" />
+
             <TextView
                 android:text="Team"
                 android:gravity="right"
                 android:padding="20dip"
                 android:textColor="#FFFFFF"
                 android:textSize="40px"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:id="@+id/profile_userteam"
+                android:visibility="gone" />
         </TableRow>
 
 

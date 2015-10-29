@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 /**
@@ -21,10 +22,15 @@ public class PersonalScore extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.personalscore);
         aktualisierenbtn=(Button)findViewById(R.id.bAktualisieren);
+
+        TextView scoreText = (TextView)findViewById(R.id.score_field);
+        scoreText.setText(OwnUser.score.toString());
         aktualisierenbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getApplicationContext(), "Aktualisieren Clicked", Toast.LENGTH_SHORT).show();
+                TextView scoreText = (TextView)findViewById(R.id.score_field);
+                scoreText.setText(OwnUser.score.toString());
             }
         });
     }
