@@ -11,5 +11,6 @@ public interface HttpResponseInterface {
     public void displayBestUserRanking(String[][] bestUserArray);
     public void displayTeamRanking(String[][] teamRankingArray);
     public void displayFriends(String[][] friendArray);
+    public void verificationCompleted(Boolean result);
 
 }

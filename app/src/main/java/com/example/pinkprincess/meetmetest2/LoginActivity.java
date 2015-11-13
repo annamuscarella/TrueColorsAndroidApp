@@ -1,89 +1,125 @@
 package com.example.pinkprincess.meetmetest2;
 
 import android.app.Activity;
+import android.app.DialogFragment;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.speech.RecognizerIntent;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+
 
 /**
  * Created by mahandru on 18.10.2015.
  */
-public class LoginActivity extends Activity {
+public class LoginActivity extends Activity implements HttpResponseInterface{
 
     Button loginbtn;
-
+    private Context context;
+    EditText username;
+    EditText password;
+    Thread thread;
+    Thread current;
+    Handler mHandler;
+    TextView login_failed;
+    DialogFragment waiting_dialog;
+    final int LOGIN_SUCCESS = 1;
+    final int LOGIN_FAILED = 0;
+    HttpRequestInterface httpRequests = new HttpRequestSender();
+    HttpRequestInterface offlineRequest = new OfflineTester();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
+        current = Thread.currentThread();
+        context = this;
+        mHandler = new Handler(Looper.getMainLooper()){
+            @Override
+        public void handleMessage(Message inputMessage){
+                switch (inputMessage.what){
+                    case LOGIN_FAILED:
+                        waiting_dialog.dismiss();
+                        login_failed.setVisibility(View.VISIBLE);
+                        break;
+                    case LOGIN_SUCCESS:
+                        waiting_dialog.dismiss();
+                        OwnUser.loggedIn = true;
+                        startActivity(new Intent(LoginActivity.this, MapsActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY));
+                        LoginActivity.this.finish();
+                        break;
+                    default:
+                        waiting_dialog.dismiss();
+                        break;
 
+                }
+            }
+        };
+
+        username = (EditText) findViewById(R.id.etUsername);
+        password = (EditText) findViewById(R.id.etPassword);
+
+        login_failed = (TextView) findViewById(R.id.tv_login_failed);
+        TextView registerlink = (TextView) findViewById(R.id.tvRegisterLink);
+        registerlink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this, RegisterActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY));
+            }
+        });
         loginbtn=(Button)findViewById(R.id.bLogin);
         loginbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "Login Clicked", Toast.LENGTH_SHORT).show();
+                OwnUser.base64String = new String(Base64.encode(("" + username.getText() + ":" + password.getText()).getBytes(), Base64.DEFAULT));
+                username.setText("");
+                password.setText("");
+                //Toast.makeText(getApplicationContext(), OwnUser.base64String, Toast.LENGTH_LONG).show();
+
+                waiting_dialog = new LoginWaitDialog();
+                waiting_dialog.setStyle(DialogFragment.STYLE_NORMAL, R.style.Login_Wait);
+                android.app.FragmentManager fm = getFragmentManager();
+                waiting_dialog.show(fm, "id");
+
+
+
+                thread = new Thread() {
+                    @Override
+                public void run() {
+                        if (MapsActivity.connectionToServer) {
+                            httpRequests.doVerifyLogin(context);
+                        }
+                        else {
+                            offlineRequest.doVerifyLogin(context);
+                        }
+                    }
+                };
+                thread.start();
+
+
+
+               /* if (MapsActivity.connectionToServer) {
+                    httpRequests.doVerifyLogin(context);
+                }
+                else {
+                    offlineRequest.doVerifyLogin(context);
+                }*/
+
             }
         });
 
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
 
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-
-
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        int id = item.getItemId();
-        switch (id) {
-            case R.id.action_call:
-                Intent dialer= new Intent(Intent.ACTION_DIAL);
-                startActivity(dialer);
-                return true;
-
-            case R.id.action_homepic:
-                startActivity(new Intent(LoginActivity.this,MapsActivity.class));
-                return true;
-
-            case R.id.action_register:
-                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
-                return true;
-            case R.id.action_homep:
-                startActivity(new Intent(LoginActivity.this, MapsActivity.class));
-                return true;
-
-            case R.id.action_login:
-                startActivity(new Intent(LoginActivity.this, LoginActivity.class));
-                return true;
-
-            case R.id.action_settings:
-                Toast.makeText(getApplicationContext(), "Settings Clicked", Toast.LENGTH_SHORT).show();
-                return true;
-            case R.id.action_profile:
-                startActivity(new Intent(LoginActivity.this, PersonalStatistics.class));
-                return true;
-
-            case R.id.action_score:
-                startActivity(new Intent(LoginActivity.this, PersonalScore.class));
-                return true;
-
-            case R.id.action_ranking:
-                startActivity(new Intent(LoginActivity.this, TeamRanking.class));
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 1234 && resultCode == RESULT_OK) {
@@ -94,4 +130,44 @@ public class LoginActivity extends Activity {
     }
 
 
+    @Override
+    public void displayOtherUser(ArrayList<OtherUser> userArray) {
+
+    }
+
+    @Override
+    public void userMeetingValidation(String otherUserName, Boolean userMeeting) {
+
+    }
+
+    @Override
+    public void displayBestUserRanking(String[][] bestUserArray) {
+
+    }
+
+    @Override
+    public void displayTeamRanking(String[][] teamRankingArray) {
+
+    }
+
+    @Override
+    public void displayFriends(String[][] friendArray) {
+
+    }
+
+    @Override
+    public void verificationCompleted(Boolean result) {
+
+        thread.interrupt();
+
+        if (result){
+            Message login_success_message = mHandler.obtainMessage(LOGIN_SUCCESS);
+            login_success_message.sendToTarget();
+        }
+        else{
+            Message login_failed_message = mHandler.obtainMessage(LOGIN_FAILED);
+            login_failed_message.sendToTarget();
+            //Toast.makeText(getApplicationContext(), "Login not successful", Toast.LENGTH_LONG).show();
+        }
+    }
 }

@@ -12,4 +12,5 @@ public interface HttpRequestInterface {
     public void doGetTeamRanking(Context context);
     public void doGetUserRanking(Context context);
     public void doGetFriends(Context context);
+    public void doVerifyLogin(Context context);
 }

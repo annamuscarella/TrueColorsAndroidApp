@@ -1,6 +1,8 @@
 package com.example.pinkprincess.meetmetest2;
 
 import android.content.Context;
+import android.os.SystemClock;
+import android.util.Base64;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -145,6 +147,20 @@ public class OfflineTester implements HttpRequestInterface {
         String[][] friendarray = {{"anna","german"}, {"nina", "nongerman"}, {"HeWhoMustNotBeNamed", "nongerman"}, {"jesus", "german"}};
         HttpResponseInterface activity = (HttpResponseInterface) context;
         activity.displayFriends(friendarray);
+    }
+
+    @Override
+    public void doVerifyLogin(Context context) {
+
+        String tester = new String(Base64.encode(("Anna:1234").getBytes(), Base64.DEFAULT));
+        Context con = context;
+        final HttpResponseInterface activity = (HttpResponseInterface) context;
+        SystemClock.sleep(1500);
+        if(tester.equals(OwnUser.base64String)){
+            activity.verificationCompleted(true);
+        }
+        else {
+        activity.verificationCompleted(false);}
     }
 
 

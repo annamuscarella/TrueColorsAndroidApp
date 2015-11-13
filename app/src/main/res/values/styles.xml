@@ -17,4 +17,9 @@
         <item name="android:background">@drawable/actionbar_back</item>
     </style>
 
+    <style name="Login_Wait" parent="@android:style/Theme.Holo.Light.DarkActionBar">
+        <item name="android:actionBarStyle">@style/MyActionBar</item>
+        <item name="android:alertDialogTheme">@android:style/Theme.Holo.Dialog</item>
+    </style>
+
 </resources>

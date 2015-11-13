@@ -123,16 +123,8 @@ public class FriendList extends Activity {
             case R.id.action_homepic:
                 startActivity(new Intent(FriendList.this, MapsActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
                 return true;
-            case R.id.action_register:
-                startActivity(new Intent(FriendList.this, RegisterActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
-                return true;
             case R.id.action_homep:
                 startActivity(new Intent(FriendList.this, MapsActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
-                return true;
-
-
-            case R.id.action_login:
-                startActivity(new Intent(FriendList.this, LoginActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
                 return true;
 
             case R.id.action_settings:

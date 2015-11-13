@@ -73,15 +73,8 @@ public class UserRanking extends Activity implements HttpResponseInterface {
             case R.id.action_homepic:
                 startActivity(new Intent(UserRanking.this,MapsActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY));
                 return true;
-            case R.id.action_register:
-                startActivity(new Intent(UserRanking.this, RegisterActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY));
-                return true;
             case R.id.action_homep:
                 startActivity(new Intent(UserRanking.this, MapsActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY));
-                return true;
-
-            case R.id.action_login:
-                startActivity(new Intent(UserRanking.this, LoginActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY));
                 return true;
 
             case R.id.action_settings:
@@ -156,6 +149,11 @@ public class UserRanking extends Activity implements HttpResponseInterface {
 
     @Override
     public void displayFriends(String[][] friendArray) {
+
+    }
+
+    @Override
+    public void verificationCompleted(Boolean result) {
 
     }
 }

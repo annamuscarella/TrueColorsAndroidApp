@@ -64,6 +64,7 @@ public class HttpRequestSender implements HttpRequestInterface {
                     HttpURLConnection urlConnection = null;
                     try {
                         urlConnection = (HttpURLConnection) requestUrl.openConnection();
+                        urlConnection.setRequestProperty("Authorization", "Basic " + OwnUser.base64String);
                         response = urlConnection.getInputStream();
                         if (response != null) {
                             ResponseImportierer mResponseImportierer = new ResponseImportierer(); //create new JSON Parser Object
@@ -127,6 +128,7 @@ public class HttpRequestSender implements HttpRequestInterface {
                     HttpURLConnection urlConnection = null;
                     try {
                         urlConnection = (HttpURLConnection) requestUrl.openConnection();
+                        urlConnection.setRequestProperty("Authorization", "Basic " + OwnUser.base64String);
                         response = urlConnection.getInputStream();
                         BufferedReader r = new BufferedReader(new InputStreamReader(response));
                         StringBuilder total = new StringBuilder();
@@ -202,6 +204,7 @@ public class HttpRequestSender implements HttpRequestInterface {
                     HttpURLConnection urlConnection = null;
                     try {
                         urlConnection = (HttpURLConnection) requestUrl.openConnection();
+                        urlConnection.setRequestProperty("Authorization", "Basic " + OwnUser.base64String);
                         response = urlConnection.getInputStream();
                         if (response != null) {
                             ResponseImportierer mResponseImportierer = new ResponseImportierer();
@@ -257,6 +260,7 @@ public class HttpRequestSender implements HttpRequestInterface {
                     HttpURLConnection urlConnection = null;
                     try {
                         urlConnection = (HttpURLConnection) requestUrl.openConnection();
+                        urlConnection.setRequestProperty("Authorization", "Basic " + OwnUser.base64String);
                         response = urlConnection.getInputStream();
                         if (response != null) {
                             ResponseImportierer mResponseImportierer = new ResponseImportierer(); //create new JSON Parser Object
@@ -323,6 +327,7 @@ public class HttpRequestSender implements HttpRequestInterface {
                         HttpURLConnection urlConnection = null;
                         try {
                             urlConnection = (HttpURLConnection) requestUrl.openConnection();
+                            urlConnection.setRequestProperty("Authorization", "Basic " + OwnUser.base64String);
                             response = urlConnection.getInputStream();
                             if (response != null) {
                                 ResponseImportierer mResponseImportierer = new ResponseImportierer(); //create new JSON Parser Object
@@ -358,6 +363,12 @@ public class HttpRequestSender implements HttpRequestInterface {
                         activity.displayFriends(responseStringArray);
             }
         }.execute();
+    }
+
+    @Override
+    public void doVerifyLogin(Context context) {
+        Context con = context;
+        final HttpResponseInterface activity = (HttpResponseInterface) context;
     }
 
 

@@ -10,8 +10,9 @@ import java.util.ArrayList;
 public abstract class OwnUser {
 
     //a class for storing user information, abstract because there will be only one user logged in
-    static boolean loggedIn = true;
+    static boolean loggedIn = false;
     static String userName = "hans";
+    static String base64String = null;
     static String userColor = "red";
     static LatLng ownLocation;
     static Integer score = 2;

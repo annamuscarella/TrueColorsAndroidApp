@@ -56,17 +56,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 return true;
 
 
-            case R.id.action_register:
-                startActivity(new Intent(MainActivity.this, RegisterActivity.class));
-                return true;
-
             case R.id.action_homep:
                 startActivity(new Intent(MainActivity.this, MapsActivity.class));
                 return true;
 
-            case R.id.action_login:
-                startActivity(new Intent(MainActivity.this, LoginActivity.class));
-                return true;
 
             case R.id.action_settings:
                 Toast.makeText(getApplicationContext(), "Settings Clicked", Toast.LENGTH_SHORT).show();

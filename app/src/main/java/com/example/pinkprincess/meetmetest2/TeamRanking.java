@@ -73,15 +73,9 @@ public class TeamRanking extends Activity implements HttpResponseInterface {
             case R.id.action_homepic:
                 startActivity(new Intent(TeamRanking.this,MapsActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY));
                 return true;
-            case R.id.action_register:
-                startActivity(new Intent(TeamRanking.this, RegisterActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY));
-                return true;
+
             case R.id.action_homep:
                 startActivity(new Intent(TeamRanking.this, MapsActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY));
-                return true;
-
-            case R.id.action_login:
-                startActivity(new Intent(TeamRanking.this, LoginActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY));
                 return true;
 
             case R.id.action_settings:
@@ -141,6 +135,11 @@ public class TeamRanking extends Activity implements HttpResponseInterface {
 
     @Override
     public void displayFriends(String[][] friendArray) {
+
+    }
+
+    @Override
+    public void verificationCompleted(Boolean result) {
 
     }
 }

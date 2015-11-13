@@ -37,13 +37,14 @@
 
         <activity
             android:name=".MapsActivity"
-            android:label="@string/title_activity_test2" >
+            android:label="@string/title_activity_test2">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <!--<activity
             android:name=".LocationProvider"
             android:label="@string/title_activity_locate_user" >
@@ -52,7 +53,7 @@
             android:name=".OtherUser"
             android:label="@string/title_activity_other_user" >
         </activity>-->#
-    <activity android:name=".LoginActivity"></activity>
+    <activity android:name=".LoginActivity" android:theme="@style/Login_Wait"></activity>
     <activity android:name=".PersonalScore"></activity>
     <activity android:name=".PersonalStatistics"></activity>
     <activity android:name=".TeamRanking"></activity>

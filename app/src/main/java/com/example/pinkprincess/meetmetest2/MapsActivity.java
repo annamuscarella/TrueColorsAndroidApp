@@ -36,12 +36,12 @@ public class MapsActivity extends FragmentActivity implements LocationProvider.L
     HttpRequestInterface httpRequests = new HttpRequestSender();
     HttpRequestInterface offlineRequest = new OfflineTester();
 
-    public static final boolean connectionToServer = true; //HIER ANGEBEN, ob Server connected ist oder nicht!!
+    public static final boolean connectionToServer = false; //HIER ANGEBEN, ob Server connected ist oder nicht!!
 
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
     private LocationProvider mLocationProvider; //class is used to get user's current location
 
-    private Context context = this;
+    public Context context = this;
 
     private Marker lastMarkerClicked;
 
@@ -63,46 +63,56 @@ public class MapsActivity extends FragmentActivity implements LocationProvider.L
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_radar);
-        setUpMapIfNeeded();
+        if (OwnUser.loggedIn==false) {
+            startActivity(new Intent(MapsActivity.this, LoginActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY));
+            this.finish();
+        }
+        else {
+            setUpMapIfNeeded();
 
-        eingabefeld = (LinearLayout) findViewById(R.id.CodeEingabefeld);
-        submit = (Button) findViewById(R.id.submit_button);
-        submit.setOnClickListener(new View.OnClickListener() {
-                                      @Override
-                                      public void onClick(View v) {
-                                          codeEingabe = (EditText) findViewById(R.id.editText);
-                                          if (codeEingabe == null){
-                                              Log.d(TAG, "eingabe is null");
-                                          }
-                                          else {
-                                              otherUserCode = codeEingabe.getText().toString();
-                                              httpRequests.doGetUserMeeting(context, lastMarkerClicked.getTitle(), otherUserCode);
-                                              eingabefeld.setVisibility(View.GONE);
-                                              codeEingabe.setText("");
+            eingabefeld = (LinearLayout) findViewById(R.id.CodeEingabefeld);
+            submit = (Button) findViewById(R.id.submit_button);
+            submit.setOnClickListener(new View.OnClickListener() {
+                                          @Override
+                                          public void onClick(View v) {
+                                              codeEingabe = (EditText) findViewById(R.id.editText);
+                                              if (codeEingabe == null){
+                                                  Log.d(TAG, "eingabe is null");
+                                              }
+                                              else {
+                                                  otherUserCode = codeEingabe.getText().toString();
+                                                  httpRequests.doGetUserMeeting(context, lastMarkerClicked.getTitle(), otherUserCode);
+                                                  eingabefeld.setVisibility(View.GONE);
+                                                  codeEingabe.setText("");
+                                              }
                                           }
                                       }
-                                  }
         /*If submit button in eingabefeld is clicked, user's entry in codeEingabe will be stored in otherUserCode as String
           eingabefeld is hidden again */
-        );
+            );
 
-        cancel = (Button) findViewById(R.id.cancel_button);
-        cancel.setOnClickListener(new View.OnClickListener() {
-                                      @Override
-                                      public void onClick(View v) {
-                                          eingabefeld.setVisibility(View.GONE);
-                                          if (codeEingabe == null){
-                                              Log.d(TAG, "eingabe is null");
+            cancel = (Button) findViewById(R.id.cancel_button);
+            cancel.setOnClickListener(new View.OnClickListener() {
+                                          @Override
+                                          public void onClick(View v) {
+                                              eingabefeld.setVisibility(View.GONE);
+                                              if (codeEingabe == null){
+                                                  Log.d(TAG, "eingabe is null");
+                                              }
+                                              else{codeEingabe.setText("");}
                                           }
-                                          else{codeEingabe.setText("");}
                                       }
-                                  }
-                //If cancel Button in eingabefeld is clicked, eingabefeld is hidden again
-        );
+                    //If cancel Button in eingabefeld is clicked, eingabefeld is hidden again
+            );
 
 
 
-        mLocationProvider = new LocationProvider(this, this);
+
+
+            mLocationProvider = new LocationProvider(this, this);
+
+        }
+
 
 
     }
@@ -124,15 +134,6 @@ public class MapsActivity extends FragmentActivity implements LocationProvider.L
             case R.id.action_call:
                 Intent dialer= new Intent(Intent.ACTION_DIAL);
                 startActivity(dialer);
-                return true;
-
-            case R.id.action_register:
-                startActivity(new Intent(MapsActivity.this, RegisterActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY));
-                return true;
-
-
-            case R.id.action_login:
-                startActivity(new Intent(MapsActivity.this, LoginActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY));
                 return true;
 
             case R.id.action_settings:
@@ -287,6 +288,11 @@ public class MapsActivity extends FragmentActivity implements LocationProvider.L
 
     @Override
     public void displayFriends(String[][] friendArray) {
+
+    }
+
+    @Override
+    public void verificationCompleted(Boolean result) {
 
     }
 
