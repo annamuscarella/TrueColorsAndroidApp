@@ -17,7 +17,7 @@ public class ResponseImportierer {
     public <F> ArrayList<F> readJsonStream(InputStream in) throws IOException, NetworkOnMainThreadException {
         JsonReader reader = new JsonReader(new InputStreamReader(in, "UTF-8"));
         try {
-            return this.<F>readJsonObject(reader);
+            return this.readJsonObject(reader);
         } finally {
             reader.close();
         }
@@ -30,7 +30,7 @@ public class ResponseImportierer {
         while (reader.hasNext()) {
             String test = reader.nextName();
             if (test.equals("userPosition")) {
-                objectArray = this.<R>readUsersArray(reader);
+                objectArray = this.readUsersArray(reader);
             }
             if (test.equals("topTeamList")) {
                 objectArray = readTeamRankings(reader);

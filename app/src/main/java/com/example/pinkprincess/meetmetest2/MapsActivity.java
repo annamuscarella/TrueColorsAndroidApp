@@ -5,6 +5,9 @@ import android.content.Intent;
 import android.content.res.AssetManager;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -27,7 +30,9 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class MapsActivity extends FragmentActivity implements LocationProvider.LocationCallback, OnMarkerClickListener, OnMapReadyCallback, HttpResponseInterface {
 
@@ -42,8 +47,11 @@ public class MapsActivity extends FragmentActivity implements LocationProvider.L
     private LocationProvider mLocationProvider; //class is used to get user's current location
 
     public Context context = this;
+    Boolean handle_new_location_free = true;
 
     private Marker lastMarkerClicked;
+
+    Thread thread;
 
 
     private ArrayList<Marker> markers = new ArrayList();
@@ -57,11 +65,15 @@ public class MapsActivity extends FragmentActivity implements LocationProvider.L
     private String userCode; //String for storing own code locally (recieved from server at login later)
     private LinearLayout eingabefeld; //windows that appears if user is clicked and users might have met
     public static AssetManager assetManager;
+    Handler mHandler;
+    static Timestamp old;
+    static Timestamp current;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.layout_radar);
         if (OwnUser.loggedIn==false) {
             startActivity(new Intent(MapsActivity.this, LoginActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY));
@@ -110,6 +122,32 @@ public class MapsActivity extends FragmentActivity implements LocationProvider.L
 
 
             mLocationProvider = new LocationProvider(this, this);
+            Calendar cal = Calendar.getInstance();
+            java.util.Date now = cal.getTime();
+            old = new Timestamp(now.getTime());
+            thread = new Thread() {
+                @Override
+                public void run() {
+                    while (true){
+                        Calendar cal = Calendar.getInstance();
+                        java.util.Date now = cal.getTime();
+                        current = new Timestamp(now.getTime());
+                        long diff = current.getTime() - old.getTime();
+                        if (diff > 400 && handle_new_location_free){  Message login_success_message = mHandler.obtainMessage(0);
+                            login_success_message.sendToTarget();
+
+                        }
+                        else {
+                            try {
+                                sleep(5000);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                }
+            };
+            thread.start();
 
         }
 
@@ -200,10 +238,35 @@ public class MapsActivity extends FragmentActivity implements LocationProvider.L
 
 
     public void handleNewLocation(Location location) {
+
+        handle_new_location_free = false;
         /*
         method is called from LocationProvider.onConnected() (as soon as GoogleApiClient is connected successfully)
         and from LocationProvider.onLocationChanged() (as soon as user moved)
          */
+        mHandler = new Handler(Looper.getMainLooper()){
+            @Override
+            public void handleMessage(android.os.Message inputMessage){
+                switch (inputMessage.what){
+                    case 0:
+                        Location location_handler = new Location("");
+                        location_handler.setLatitude(OwnUser.ownLocation.latitude);
+                        location_handler.setLongitude(OwnUser.ownLocation.longitude);
+                        handleNewLocation(location_handler);
+                        break;
+                    /*case 1:
+                        waiting_dialog.dismiss();
+                        OwnUser.loggedIn = true;
+                        startActivity(new Intent(LoginActivity.this, MapsActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY));
+                        LoginActivity.this.finish();
+                        break;
+                    default:
+                        waiting_dialog.dismiss();
+                        break;*/
+
+                }
+            }
+        };
         Log.d(TAG, location.toString());
         OwnUser.ownLocation = new LatLng(location.getLatitude(), location.getLongitude()); //save location as LatLng
 
@@ -217,6 +280,7 @@ public class MapsActivity extends FragmentActivity implements LocationProvider.L
         mMap.addMarker(options);
         mMap.moveCamera(CameraUpdateFactory.newLatLng(OwnUser.ownLocation));
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(OwnUser.ownLocation, 14.5f));
+
         //add new marker at current user position
 
         context = this;
@@ -229,13 +293,13 @@ public class MapsActivity extends FragmentActivity implements LocationProvider.L
             assetManager = getAssets();
             offlineRequest.doGetOtherUsers(context);
         }
+
     }
 
 
     private boolean checkIfOwnLocationAlreadyDisplayed() {
         boolean answer = false;
-        if (findOwnLocationMarker()==null){answer = false;}
-        else {answer = true;}
+        answer = findOwnLocationMarker() != null;
         return answer;
     }
 
@@ -267,6 +331,10 @@ public class MapsActivity extends FragmentActivity implements LocationProvider.L
         }
             displayOtherUser(OwnUser.nearestUserArray);
     }
+
+    old = current;
+    Toast.makeText(getApplicationContext(), "Map aktualisiert", Toast.LENGTH_SHORT).show();
+    handle_new_location_free = true;
     }
 
     @Override
@@ -342,8 +410,7 @@ public class MapsActivity extends FragmentActivity implements LocationProvider.L
         if (distance < MAX_DISTANCE) {
             for (int a=0; a < OwnUser.nearestUserArray.size(); a++){
                 if(OwnUser.nearestUserArray.get(a).name.equals(marker.getTitle())){
-                    if(OwnUser.nearestUserArray.get(a).color.equals("grey")){answer = true;}
-                    else{answer = false;}
+                    answer = OwnUser.nearestUserArray.get(a).color.equals("grey");
                 }
             }
         }
@@ -363,7 +430,6 @@ public class MapsActivity extends FragmentActivity implements LocationProvider.L
         marker.setTitle("angeklickt");
         return false;
     }
-
 
 }
 

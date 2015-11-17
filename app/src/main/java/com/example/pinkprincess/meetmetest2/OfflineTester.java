@@ -26,7 +26,7 @@ public class OfflineTester implements HttpRequestInterface {
         if (stream != null) {
             ResponseImportierer mResponseImportierer = new ResponseImportierer(); //create new JSON Parser Object
             try {
-                OwnUser.nearestUserArray = mResponseImportierer.<OtherUser>readJsonStream(stream);
+                OwnUser.nearestUserArray = mResponseImportierer.readJsonStream(stream);
                 activity.displayOtherUser(OwnUser.nearestUserArray);}
             catch (IOException e) {
                 e.printStackTrace();
@@ -56,7 +56,7 @@ public class OfflineTester implements HttpRequestInterface {
         if (stream != null) {
             ResponseImportierer mResponseImportierer = new ResponseImportierer(); //create new JSON Parser Object
             try {
-                responseArrayList = mResponseImportierer.<String[]>readJsonStream(stream);
+                responseArrayList = mResponseImportierer.readJsonStream(stream);
                 responseStringArray = new String[responseArrayList.size()][2];
                 responseStringArray[0][0] = "a";
                 for (int i = 0; i < responseArrayList.size(); i++) {
@@ -92,7 +92,7 @@ public class OfflineTester implements HttpRequestInterface {
         if (stream != null) {
             ResponseImportierer mResponseImportierer = new ResponseImportierer(); //create new JSON Parser Object
             try {
-                responseArrayList = mResponseImportierer.<String[]>readJsonStream(stream);
+                responseArrayList = mResponseImportierer.readJsonStream(stream);
                 responseStringArray = new String[responseArrayList.size()][3];
                 for (int i = 0; i < responseArrayList.size(); i++) {
                     String[] current = responseArrayList.get(i);
@@ -160,7 +160,7 @@ public class OfflineTester implements HttpRequestInterface {
             activity.verificationCompleted(true);
         }
         else {
-        activity.verificationCompleted(false);}
+        activity.verificationCompleted(true);}
     }
 
 

@@ -15,8 +15,8 @@ public class LocationProvider implements
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
 
 
-    public abstract interface LocationCallback {
-        public void handleNewLocation(Location location);
+    public interface LocationCallback {
+        void handleNewLocation(Location location);
     }
 
     public static final String TAG = LocationProvider.class.getSimpleName();
@@ -25,6 +25,8 @@ public class LocationProvider implements
     private Context mContext;
     private GoogleApiClient mGoogleApiClient;
     private LocationRequest mLocationRequest;
+
+
 
     public LocationProvider(Context context, LocationCallback callback) {
         mGoogleApiClient = new GoogleApiClient.Builder(context)
@@ -82,7 +84,7 @@ public class LocationProvider implements
 
     @Override
     public void onLocationChanged(Location location) {
-        //mLocationCallback.handleNewLocation(location);
+        mLocationCallback.handleNewLocation(location);
     }
 
 }
