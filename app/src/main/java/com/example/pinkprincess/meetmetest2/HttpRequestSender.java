@@ -18,7 +18,7 @@ import java.util.StringTokenizer;
  */
 public class HttpRequestSender implements HttpRequestInterface {
 
-    private static String IpAdresse = "172.20.10.5";
+    private static String IpAdresse = "172.20.10.2.";
     private static String port = "8087";
     private static URL requestUrl;
     //private Context callbackActivity;

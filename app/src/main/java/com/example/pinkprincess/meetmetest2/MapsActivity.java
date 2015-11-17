@@ -41,7 +41,7 @@ public class MapsActivity extends FragmentActivity implements LocationProvider.L
     HttpRequestInterface httpRequests = new HttpRequestSender();
     HttpRequestInterface offlineRequest = new OfflineTester();
 
-    public static final boolean connectionToServer = false; //HIER ANGEBEN, ob Server connected ist oder nicht!!
+    public static final boolean connectionToServer = true; //HIER ANGEBEN, ob Server connected ist oder nicht!!
 
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
     private LocationProvider mLocationProvider; //class is used to get user's current location
@@ -122,9 +122,11 @@ public class MapsActivity extends FragmentActivity implements LocationProvider.L
 
 
             mLocationProvider = new LocationProvider(this, this);
+
             Calendar cal = Calendar.getInstance();
             java.util.Date now = cal.getTime();
             old = new Timestamp(now.getTime());
+
             thread = new Thread() {
                 @Override
                 public void run() {
@@ -133,13 +135,18 @@ public class MapsActivity extends FragmentActivity implements LocationProvider.L
                         java.util.Date now = cal.getTime();
                         current = new Timestamp(now.getTime());
                         long diff = current.getTime() - old.getTime();
-                        if (diff > 400 && handle_new_location_free){  Message login_success_message = mHandler.obtainMessage(0);
+                        if (diff > 500 && handle_new_location_free){  Message login_success_message = mHandler.obtainMessage(0);
                             login_success_message.sendToTarget();
+                            try {
+                                sleep(9000);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
 
                         }
                         else {
                             try {
-                                sleep(5000);
+                                sleep(9000);
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             }
@@ -148,6 +155,29 @@ public class MapsActivity extends FragmentActivity implements LocationProvider.L
                 }
             };
             thread.start();
+            mHandler = new Handler(Looper.getMainLooper()){
+                @Override
+                public void handleMessage(android.os.Message inputMessage){
+                    switch (inputMessage.what){
+                        case 0:
+                            Location location_handler = new Location("");
+                            location_handler.setLatitude(OwnUser.ownLocation.latitude);
+                            location_handler.setLongitude(OwnUser.ownLocation.longitude);
+                            handleNewLocation(location_handler);
+                            break;
+                    /*case 1:
+                        waiting_dialog.dismiss();
+                        OwnUser.loggedIn = true;
+                        startActivity(new Intent(LoginActivity.this, MapsActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY));
+                        LoginActivity.this.finish();
+                        break;
+                    default:
+                        waiting_dialog.dismiss();
+                        break;*/
+
+                    }
+                }
+            };
 
         }
 
@@ -244,29 +274,7 @@ public class MapsActivity extends FragmentActivity implements LocationProvider.L
         method is called from LocationProvider.onConnected() (as soon as GoogleApiClient is connected successfully)
         and from LocationProvider.onLocationChanged() (as soon as user moved)
          */
-        mHandler = new Handler(Looper.getMainLooper()){
-            @Override
-            public void handleMessage(android.os.Message inputMessage){
-                switch (inputMessage.what){
-                    case 0:
-                        Location location_handler = new Location("");
-                        location_handler.setLatitude(OwnUser.ownLocation.latitude);
-                        location_handler.setLongitude(OwnUser.ownLocation.longitude);
-                        handleNewLocation(location_handler);
-                        break;
-                    /*case 1:
-                        waiting_dialog.dismiss();
-                        OwnUser.loggedIn = true;
-                        startActivity(new Intent(LoginActivity.this, MapsActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY));
-                        LoginActivity.this.finish();
-                        break;
-                    default:
-                        waiting_dialog.dismiss();
-                        break;*/
 
-                }
-            }
-        };
         Log.d(TAG, location.toString());
         OwnUser.ownLocation = new LatLng(location.getLatitude(), location.getLongitude()); //save location as LatLng
 
